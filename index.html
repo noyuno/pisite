@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome to nginx on Debian!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Raspberry Pi 3 Server</h1>
+<p>Raspberry Pi 3 で主にファイルサーバを運用中．</p>
+<a href="//git.noyuno.mydns.jp">Git</a>
+<a href="//kanban.noyuno.mydns.jp">Kanban</a>
+
+<canvas id="myChart"></canvas>
+
+<hr>
+<address><a href="//noyuno.github.io">noyuno</a></address>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script>
+window.onload = function () {
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var r = new XMLHttpRequest();
+    r.onload = function () {
+        var d = JSON.parse(r.responseText);
+        var myChart = new Chart(ctx, {
+            type: 'pie', 
+            data: {
+                labels: ["used", "free"], 
+                datasets: [{
+                    data: [d.used, d.free],
+                    backgroundColor: [
+                        "#2ecc71",
+                        "#3498db",
+                        "#95a5a6",
+                        "#9b59b6",
+                        "#f1c40f",
+                        "#e74c3c",
+                        "#34495e"
+                    ],
+                }]
+            }, 
+            options: {
+                title: {
+                    display: true,
+                    text: "disk usage"
+                }
+            }
+            });
+    };
+    r.onerror = function () {
+        console.log("error");
+    };
+
+    r.open('GET', "/disk.php", true);
+    r.send(null);
+};
+</script>
+</body>
+</html>
