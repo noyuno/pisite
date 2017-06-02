@@ -38,7 +38,9 @@ if sent == False:
         time.sleep(0.01)
         count -= 1
 
-    j = json.dumps(c.media_controller.status.media_metadata, indent=4,
+    d = c.media_controller.status.media_metadata
+    d["app"] = c.app_display_name
+    j = json.dumps(d, indent=4,
         sort_keys=True, ensure_ascii=False, separators=(",", ": "))
     print(j)
     

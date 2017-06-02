@@ -19,14 +19,14 @@
     <a href="//status.noyuno.mydns.jp">Status</a>
 </div>
 <div>
-    <div>
-        Chromecast: 
-        <button id="play">Play</button>
-        <button id="pause">Pause</button>
-        <span id="chromecast"></span>
-    </div>
     <div style="background-color: black; float:left">
         <img id="chromecast_fig"></img>
+    </div>
+    <div>
+        Chromecast: 
+        <button id="play">再生</button>
+        <button id="pause">一時停止</button>
+        <div id="chromecast"></div>
     </div>
 </div>
 <canvas id="myChart"></canvas>
@@ -65,7 +65,7 @@ var disk = function () {
             options: {
                 title: {
                     display: true,
-                    text: "disk usage"
+                    text: "disk usage [GiB]"
                 }
             }
             });
@@ -84,9 +84,12 @@ var chromecast = function () {
     r.onload = function () {
         var d = JSON.parse(r.responseText);
         if (d.title == undefined) {
-            t.text("キャストしていません");
+            t.text("今はキャストしていません");
         } else {
-            t.text(d.title);
+            if (d.app == "d anime store2") {
+                d.app = "dアニメストア";
+            }
+            t.text(d.app + "「" + d.title + "」");
             $("#chromecast_fig").attr("src", d.images[0].url);
         }
     };
