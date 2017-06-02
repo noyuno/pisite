@@ -5,27 +5,42 @@
 <title>Raspberry Pi 3 Server</title>
 <style>
     body {
-        width: 35em;
+        width: 50em;
         margin: 0 auto;
-        font-family: Tahoma, Verdana, Arial, sans-serif;
     }
 </style>
 </head>
 <body>
 <h1>Raspberry Pi 3 Server</h1>
-<p>Raspberry Pi 3 で主にファイルサーバを運用中．</p>
-<a href="//git.noyuno.mydns.jp">Git</a>
-<a href="//kanban.noyuno.mydns.jp">Kanban</a>
-<a href="//status.noyuno.mydns.jp">Status</a>
-
+<div>
+    <p>Raspberry Pi 3 で主にファイルサーバを運用中．</p>
+    <a href="//git.noyuno.mydns.jp">Git</a>
+    <a href="//kanban.noyuno.mydns.jp">Kanban</a>
+    <a href="//status.noyuno.mydns.jp">Status</a>
+</div>
+<div>
+    <div>
+        Chromecast: 
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <span id="chromecast"></span>
+    </div>
+    <div style="background-color: black; float:left">
+        <img id="chromecast_fig"></img>
+    </div>
+</div>
 <canvas id="myChart"></canvas>
 
 <hr>
 <address><a href="//noyuno.github.io">noyuno</a></address>
 
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
-window.onload = function () {
+var disk = function () {
     var ctx = document.getElementById("myChart").getContext('2d');
     var r = new XMLHttpRequest();
     r.onload = function () {
@@ -61,6 +76,38 @@ window.onload = function () {
 
     r.open('GET', "/disk.php", true);
     r.send(null);
+
+};
+var chromecast = function () {
+    var t = $("#chromecast");
+    var r = new XMLHttpRequest();
+    r.onload = function () {
+        var d = JSON.parse(r.responseText);
+        if (d.title == undefined) {
+            t.text("キャストしていません");
+        } else {
+            t.text(d.title);
+            $("#chromecast_fig").attr("src", d.images[0].url);
+        }
+    };
+    r.onerror = function () {
+        console.log("error");
+    };
+
+    r.open('GET', "/chromecast.cgi", true);
+    r.send(null);
+    
+    $("#play").click(function () {
+        $.get("/chromecast.cgi?play=1", null, null);
+    });
+    $("#pause").click(function () {
+        $.get("/chromecast.cgi?pause=1", null, null);
+    });
+};
+
+window.onload = function () {
+    disk();
+    chromecast();
 };
 </script>
 </body>
