@@ -20,10 +20,12 @@ sent = False
 #print(args)
 
 if "play" in args:
+    time.sleep(0.08)
     c.media_controller.play()
     print("sent play")
     sent = True
 if "pause" in args:
+    time.sleep(0.08)
     c.media_controller.pause()
     print("sent pause")
     sent = True

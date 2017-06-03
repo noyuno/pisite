@@ -62,10 +62,14 @@ var chromecast = function () {
     r.send(null);
     
     $("#play").click(function () {
-        $.get(domain + "/chromecast.cgi?play=1", null, null);
+        $.get(domain + "/chromecast.cgi?play=1", function (d) {
+            console.log(d);
+        });
     });
     $("#pause").click(function () {
-        $.get(domain + "/chromecast.cgi?pause=1", null, null);
+        $.get(domain + "/chromecast.cgi?pause=1", function (d) {
+            console.log(d);
+        });
     });
 };
 
