@@ -39,58 +39,56 @@ var disk = function () {
     r.send(null);
 
 };
-var chromecast = function () {
-    var r = new XMLHttpRequest();
-    r.onload = function () {
-        var d = JSON.parse(r.responseText);
-        if (d.title == undefined) {
-            $("#chromecast").text("今はキャストしていません");
-            $("#play").removeClass("mdl-button--raised");
-            $("#pause").removeClass("mdl-button--raised");
-            $("#chromecast_fig").removeAttr("src");
-            $("#chromecast_figbase").hide();
-        } else {
-            if (d.app == "d anime store2") {
-                d.app = "dアニメストア";
-            }
-            $("#chromecast").html(d.app + "<br>" + d.title + "");
-            if (d.play) {
-                $("#play").addClass("mdl-button--raised");
-                $("#pause").removeClass("mdl-button--raised");
-            } else {
-                $("#play").removeClass("mdl-button--raised");
-                $("#pause").addClass("mdl-button--raised");
-            }
-            $("#chromecast_figbase").show();
-            $("#chromecast_fig").attr("src", d.images[0].url);
-        }
-    };
-    r.onerror = function () {
-        console.log("error");
-    };
 
-    r.open('GET', domain + "/chromecast.cgi", true);
-    r.send(null);
-    
-    $("#play").click(function () {
-        $.get(domain + "/chromecast.cgi?play=1", function (d) {
-            console.log(d);
+var parse_chromecast = function (d) {
+    if (d.title == undefined || d.sent == "stop" || (d.sent == undefined && !d.active)) {
+        $("#chromecast").text("今はキャストしていません");
+        $("#play").removeClass("mdl-button--raised");
+        $("#pause").removeClass("mdl-button--raised");
+        $("#stop").addClass("mdl-button--raised");
+        $("#chromecast_fig").removeAttr("src");
+        $("#chromecast_figbase").hide();
+    } else {
+        if (d.app == "d anime store2") {
+            d.app = "dアニメストア";
+        }
+        $("#chromecast").html(d.app + "<br>" + d.title + "");
+        if (d.sent == "play" || (d.sent == undefined && d.play)) {
             $("#play").addClass("mdl-button--raised");
             $("#pause").removeClass("mdl-button--raised");
-        });
-    });
-    $("#pause").click(function () {
-        $.get(domain + "/chromecast.cgi?pause=1", function (d) {
-            console.log(d);
+            $("#stop").removeClass("mdl-button--raised");
+        } else if (d.sent == "pause" || (d.sent == undefined && d.active)) {
             $("#play").removeClass("mdl-button--raised");
             $("#pause").addClass("mdl-button--raised");
-        });
+            $("#stop").removeClass("mdl-button--raised");
+        } else {
+            console.log("unknown sequence");
+        }
+        $("#chromecast_figbase").show();
+        $("#chromecast_fig").attr("src", d.images[0].url);
+    }
+};
+
+var init_chromecast = function () {
+    $("#play").click(function () {
+        $.get(domain + "/chromecast.cgi?play=1", parse_chromecast);
     });
+    $("#pause").click(function () {
+        $.get(domain + "/chromecast.cgi?pause=1", parse_chromecast);
+    });
+    $("#stop").click(function () {
+        $.get(domain + "/chromecast.cgi?stop=1", parse_chromecast);
+    });
+};
+
+var chromecast = function () {
+    $.get(domain + "/chromecast.cgi", parse_chromecast);
 };
 
 window.onload = function () {
     disk();
+    init_chromecast();
     chromecast();
-    window.setInterval(chromecast, 1000 * 60 * 2);
+    window.setInterval(chromecast, 1000 * 60);
 };
 
