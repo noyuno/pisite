@@ -45,6 +45,10 @@ var chromecast = function () {
         var d = JSON.parse(r.responseText);
         if (d.title == undefined) {
             $("#chromecast").text("今はキャストしていません");
+            $("#play").removeClass("mdl-button--raised");
+            $("#pause").removeClass("mdl-button--raised");
+            $("#chromecast_fig").removeAttr("src");
+            $("#chromecast_figbase").hide();
         } else {
             if (d.app == "d anime store2") {
                 d.app = "dアニメストア";
@@ -57,6 +61,7 @@ var chromecast = function () {
                 $("#play").removeClass("mdl-button--raised");
                 $("#pause").addClass("mdl-button--raised");
             }
+            $("#chromecast_figbase").show();
             $("#chromecast_fig").attr("src", d.images[0].url);
         }
     };
