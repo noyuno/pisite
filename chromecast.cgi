@@ -4,9 +4,9 @@ import json
 import os
 import pychromecast
 import cgi
-import cgitb
 import time
-cgitb.enable()
+#import cgitb
+#cgitb.enable()
 
 print("Content-Type: application/json")    # HTML is following
 print()                             # blank line, end of headers
@@ -42,6 +42,7 @@ if sent == False:
 
     d = c.media_controller.status.media_metadata
     d["app"] = c.app_display_name
+    d["play"] = c.media_controller.is_playing
     j = json.dumps(d, indent=4,
         sort_keys=True, ensure_ascii=False, separators=(",", ": "))
     print(j)

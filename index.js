@@ -40,17 +40,21 @@ var disk = function () {
 
 };
 var chromecast = function () {
-    var t = $("#chromecast");
     var r = new XMLHttpRequest();
     r.onload = function () {
         var d = JSON.parse(r.responseText);
         if (d.title == undefined) {
-            t.text("今はキャストしていません");
+            $("#chromecast").text("今はキャストしていません");
         } else {
             if (d.app == "d anime store2") {
                 d.app = "dアニメストア";
             }
-            t.text(d.app + "「" + d.title + "」");
+            $("#chromecast").html(d.app + "<br>" + d.title + "");
+            if (d.play) {
+                $("#chromecast_title").text("Chromecastで再生中");
+            } else {
+                $("#chromecast_title").text("Chromecastで一時停止中");
+            }
             $("#chromecast_fig").attr("src", d.images[0].url);
         }
     };
