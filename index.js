@@ -51,9 +51,11 @@ var chromecast = function () {
             }
             $("#chromecast").html(d.app + "<br>" + d.title + "");
             if (d.play) {
-                $("#chromecast_title").text("Chromecastで再生中");
+                $("#play").addClass("mdl-button--raised");
+                $("#pause").removeClass("mdl-button--raised");
             } else {
-                $("#chromecast_title").text("Chromecastで一時停止中");
+                $("#play").removeClass("mdl-button--raised");
+                $("#pause").addClass("mdl-button--raised");
             }
             $("#chromecast_fig").attr("src", d.images[0].url);
         }
@@ -68,11 +70,15 @@ var chromecast = function () {
     $("#play").click(function () {
         $.get(domain + "/chromecast.cgi?play=1", function (d) {
             console.log(d);
+            $("#play").addClass("mdl-button--raised");
+            $("#pause").removeClass("mdl-button--raised");
         });
     });
     $("#pause").click(function () {
         $.get(domain + "/chromecast.cgi?pause=1", function (d) {
             console.log(d);
+            $("#play").removeClass("mdl-button--raised");
+            $("#pause").addClass("mdl-button--raised");
         });
     });
 };
@@ -80,5 +86,6 @@ var chromecast = function () {
 window.onload = function () {
     disk();
     chromecast();
+    window.setInterval(chromecast, 1000 * 60 * 2);
 };
 

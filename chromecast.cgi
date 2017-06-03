@@ -22,12 +22,12 @@ sent = False
 if "play" in args:
     time.sleep(0.08)
     c.media_controller.play()
-    print("sent play")
+    print('{ "sent": "play"}')
     sent = True
 if "pause" in args:
     time.sleep(0.08)
     c.media_controller.pause()
-    print("sent pause")
+    print('{ "sent": "pause"}')
     sent = True
 if "is_active" in args:
     print(c.media_controller.is_active)
