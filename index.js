@@ -1,4 +1,8 @@
-var domain = "//noyuno.mydns.jp";
+{
+
+const domain = "//noyuno.mydns.jp";
+const cgi = "/cgi/chromecast";
+
 var disk = function () {
     var canvas = document.getElementById("myChart")
     canvas.width = 140;
@@ -71,18 +75,18 @@ var parse_chromecast = function (d) {
 
 var init_chromecast = function () {
     $("#play").click(function () {
-        $.get(domain + "/chromecast.cgi?play=1", parse_chromecast);
+        $.get(domain + cgi + "?play=1", parse_chromecast);
     });
     $("#pause").click(function () {
-        $.get(domain + "/chromecast.cgi?pause=1", parse_chromecast);
+        $.get(domain + cgi + "?pause=1", parse_chromecast);
     });
     $("#stop").click(function () {
-        $.get(domain + "/chromecast.cgi?stop=1", parse_chromecast);
+        $.get(domain + cgi + "?stop=1", parse_chromecast);
     });
 };
 
 var chromecast = function () {
-    $.get(domain + "/chromecast.cgi", parse_chromecast);
+    $.get(domain + cgi, parse_chromecast);
 };
 
 window.onload = function () {
@@ -91,4 +95,6 @@ window.onload = function () {
     chromecast();
     window.setInterval(chromecast, 1000 * 60);
 };
+
+}
 
