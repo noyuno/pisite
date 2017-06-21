@@ -5,6 +5,10 @@
       {
         "name": "origin",
         "url": "https://github.com/noyuno/noyuno.github.io.git"
+      },
+      {
+        "name": "pi",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/noyuno.github.io.git"
       }
     ]
   },
@@ -22,7 +26,7 @@
     "remote": [
       {
         "name": "origin",
-        "url": "http://noyuno.mydns.jp/git/noyuno/eng.git"
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/eng.git"
       }
     ]
   },
@@ -31,7 +35,7 @@
     "remote": [
       {
         "name": "origin",
-        "url": "http://noyuno.mydns.jp/git/noyuno/labo.git"
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/labo.git"
       }
     ]
   },
@@ -107,6 +111,10 @@
     "remote": [
       {
         "name": "origin",
+        "url": "git@github.com:noyuno/pisite.git"
+      },
+      {
+        "name": "pi",
         "url": "http://git.noyuno.mydns.jp/git/noyuno/pisite.git"
       }
     ]
