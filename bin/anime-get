@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 parent=/var/www/html
-log=$parent/log/$(now)
+log=$parent/log/$($HOME/dotfiles/bin/now)
 mkdir -p $(dirname $log)
 (
 set -x
