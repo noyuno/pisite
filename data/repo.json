@@ -1,0 +1,115 @@
+[
+  {
+    "name": "noyuno.github.io",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "https://github.com/noyuno/noyuno.github.io.git"
+      }
+    ]
+  },
+  {
+    "name": "unite-latex-symbols",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "git@github.com:noyuno/unite-latex-symbols.git"
+      }
+    ]
+  },
+  {
+    "name": "eng",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://noyuno.mydns.jp/git/noyuno/eng.git"
+      }
+    ]
+  },
+  {
+    "name": "labo",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://noyuno.mydns.jp/git/noyuno/labo.git"
+      }
+    ]
+  },
+  {
+    "name": "calc.vim",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "git@github.com:noyuno/calc.vim.git"
+      }
+    ]
+  },
+  {
+    "name": "blog",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "git@github.com:noyuno/blog.git"
+      }
+    ]
+  },
+  {
+    "name": "unite-uri",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "git@github.com:noyuno/unite-uri.git"
+      }
+    ]
+  },
+  {
+    "name": "leg",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/leg.git"
+      }
+    ]
+  },
+  {
+    "name": "pass",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/pass.git"
+      }
+    ]
+  },
+  {
+    "name": "paint",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/paint.git"
+      }
+    ]
+  },
+  {
+    "name": "dotfiles",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "git@github.com:noyuno/dotfiles.git"
+      },
+      {
+        "name": "pi",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/dotfiles.git"
+      }
+    ]
+  },
+  {
+    "name": "pisite",
+    "remote": [
+      {
+        "name": "origin",
+        "url": "http://git.noyuno.mydns.jp/git/noyuno/pisite.git"
+      }
+    ]
+  }
+]
+
