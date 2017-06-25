@@ -78,8 +78,7 @@ var print = function () {
             }
 
             $("#anime-banner").html(
-                start + "から" + vv["ChName"] + "<br>" + 
-                slim(vv["Title"], 32));
+                start + "から" + vv["ChName"] + "<br>" + vv["Title"]);
             $("#anime-title").text("Anime" + startmessage2);
             return false;
         });
