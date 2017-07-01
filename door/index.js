@@ -18,10 +18,10 @@ var datetime = function (ux) {
 var clear_result = function () {
     $("#result tr").remove();
     $("#result").append("<tr>" +
-            "<td>datetime" + 
-            "<td>door" + 
-            "<td>status" + 
-            "<td>user</tr>");
+            "<th>datetime" + 
+            "<th>door" + 
+            "<th>status" + 
+            "<th>user");
 };
 var parse_result = function (d) {
     console.log(d);
