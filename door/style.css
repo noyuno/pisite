@@ -1,0 +1,20 @@
+* {
+    font-size: 21px!important;
+    font-family: sans-serif!important;
+    padding: 3px 3px 3px 3px !important;
+    -webkit-appearance: none !important;
+}
+
+table, td, th {
+    border: 1px black solid;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+input {
+    width: 160px;
+}
+

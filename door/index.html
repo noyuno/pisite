@@ -3,19 +3,25 @@
 <head>
     <title>door</title>
     <meta charset='utf-8'>
-    <style rel="reset.css">
-    <style rel="style.css">
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 </head>
 <body>
-    <h1>door</h1>
+    <h1>door (<span id="status"></span>)</h1>
     <div id="input">
-        <label>door: </label><input type="text" id="door"></input>
-        <label>user: </label><input type="text" id="user"></input>
+        <label>door: </label><input type="text" id="door"></input><br>
+        <label>user: </label><input type="text" id="user"></input><br>
         <button id="open">Open</button>
-        <button id="close">Close</button>
+        <button id="close">Closed</button>
         <button id="search">Search</button>
     </div>
     <table id="result">
     </table>
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="index.js"> </script>
 </body>
 

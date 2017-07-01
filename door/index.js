@@ -1,60 +1,86 @@
 {
-"use strict";
 
 const domain = "//noyuno.mydns.jp";
-const searchcgi = domain + "/search.cgi";
-const updatecgi = domain + "/update.cgi";
+const searchcgi = domain + "/door/door.cgi";
+const updatecgi = domain + "/door/door.cgi";
 
+var datetime = function (ux) {
+    var d = new Date( ux * 1000 );
+    var y = d.getYear()+1900;
+    var m = d.getMonth() + 1;
+    var a   = d.getDate();
+    var h  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
+    var i   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
+    var s  = ( d.getSeconds() < 10 ) ? '0' + d.getSeconds() : d.getSeconds();
+    return m+"/"+a+" "+h+":"+i;
+};
+
+var clear_result = function () {
+    $("#result tr").remove();
+    $("#result").append("<tr>" +
+            "<td>datetime" + 
+            "<td>door" + 
+            "<td>status" + 
+            "<td>user</tr>");
+};
 var parse_result = function (d) {
-    if (d.title == undefined || d.sent == "stop" || (d.sent == undefined && !d.active)) {
-        $("#chromecast").text("今はキャストしていません");
-        $("#play").removeClass("mdl-button--raised");
-        $("#pause").removeClass("mdl-button--raised");
-        $("#stop").addClass("mdl-button--raised");
-        $("#chromecast_fig").removeAttr("src");
-        $("#chromecast_figbase").hide();
+    console.log(d);
+    clear_result();
+    for (var i in d.data) {
+        $("#result").append("<tr>" +
+            "<td>" + datetime(d.data[i].datetime) + 
+            "<td>" + d.data[i].door + 
+            "<td>" + d.data[i].status + 
+            "<td>" + d.data[i].user + "</tr>");
+    }
+    current = d.data[0].status;
+    if (current == "open") {
+        $("#open").css("background-color", "yellow");
+        $("#close").css("background-color", "white");
     } else {
-        if (d.app == "d anime store2") {
-            d.app = "dアニメストア";
-        }
-        $("#chromecast").html(d.app + "<br>" + d.title + "");
-        if (d.sent == "play" || (d.sent == undefined && d.play)) {
-            $("#play").addClass("mdl-button--raised");
-            $("#pause").removeClass("mdl-button--raised");
-            $("#stop").removeClass("mdl-button--raised");
-        } else if (d.sent == "pause" || (d.sent == undefined && d.active)) {
-            $("#play").removeClass("mdl-button--raised");
-            $("#pause").addClass("mdl-button--raised");
-            $("#stop").removeClass("mdl-button--raised");
-        } else {
-            console.log("unknown sequence");
-        }
-        $("#chromecast_figbase").show();
-        $("#chromecast_fig").attr("src", d.images[0].url);
+        $("#open").css("background-color", "white");
+        $("#close").css("background-color", "lightgreen");
+    }
+    if (d.status == "success") {
+        $("#status").text(current);
+    } else {
+        $("#status").text(d.status + ": " + current);
     }
 };
 
-var init_chromecast = function () {
+var arg = new Object;
+var init_door = function () {
+    $("#door").val(arg.door);
+    $("#user").val(arg.user);
+
     $("#open").click(function () {
-        $.get(updatecgi + "?door=" + $("#door") + "&user=" + $("#user") + "&status=open", parse_result);
+        console.log(updatecgi + "?insert=1&door=" + $("#door").val() + "&user=" + $("#user").val() + "&status=open");
+        $.get(updatecgi + "?insert=1&door=" + $("#door").val() + "&user=" + $("#user").val() + "&status=open", parse_result);
     });
     $("#close").click(function () {
-        $.get(searchcgi + "?door=" + $("#door") + "&user=" + $("#user") + "&status=close", parse_result);
+        console.log(searchcgi + "?insert=1&door=" + $("#door").val() + "&user=" + $("#user").val() + "&status=closed");
+        $.get(searchcgi + "?insert=1&door=" + $("#door").val() + "&user=" + $("#user").val() + "&status=closed", parse_result);
     });
     $("#search").click(function () {
-        $.get(searchcgi + "?door=" + $("#door"), parse_result);
+        console.log(searchcgi + "?door=" + $("#door").val());
+        $.get(searchcgi + "?door=" + $("#door").val(), parse_result);
     });
 };
 
-var chromecast = function () {
-    $.get(domain + cgi, parse_chromecast);
+var door = function () {
+    $.get(searchcgi + "?door=" + $("#door").val(), parse_result);
 };
 
 window.onload = function () {
-    disk();
-    init_chromecast();
-    chromecast();
-    window.setInterval(chromecast, 1000 * 60);
+    var pair=location.search.substring(1).split('&');
+    for(var i=0;pair[i];i++) {
+        var kv = pair[i].split('=');
+        arg[kv[0]]=kv[1];
+    }
+    init_door();
+    if (arg.door != undefined)
+        door();
+    //window.setInterval(door, 1000 * 60);
 };
 
 }

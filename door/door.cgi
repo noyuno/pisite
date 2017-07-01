@@ -13,27 +13,52 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
-print("Content-Type: text/html")
-#print("Content-Type: application/json")
+print("Content-Type: application/json")
 print()
 
 args = cgi.FieldStorage()
     
 #print(args)
 d = {}
+success = False
+
 if args is None:
+    d['status'] = 'failure'
     d['error'] = 'args'
 elif not 'door' in args:
+    d['status'] = 'failure'
     d['error'] = 'args.door'
 else:
+    # init
     conn = sqlite3.connect('/var/www/html/door/secret/data.sqlite3')
     conn.row_factory = dict_factory
     c = conn.cursor()
+
+    # create
     c.execute('''create table if not exists events(
         datetime integer, user text, door text, status text)''')
-    c.execute('select * from events where door=?', (args['door'].value,))
+
+    # insert
+    if 'insert' in args:
+        if "user" in args and "door" in args and "status" in args:
+            c.execute('''insert into events values(?, ?, ?, ?)''', 
+                (int(time.time()), args["user"].value, args["door"].value, args["status"].value))
+            success = True
+        else:
+            success = False
+    else:
+        success = True
+
+    # select
+    c.execute('select * from events where door=? order by datetime desc', (args['door'].value,))
     d["data"] = c.fetchall()
 
+    conn.commit()
+    conn.close()
+    if success:
+        d["status"] = 'success'
+    else:
+        d["status"] = 'failure'
 j = json.dumps(d, indent=4,
     sort_keys=True, ensure_ascii=False, separators=(",", ": "))
 print(j)
