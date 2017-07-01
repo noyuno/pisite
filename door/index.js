@@ -6,12 +6,10 @@ const updatecgi = domain + "/door/door.cgi";
 
 var datetime = function (ux) {
     var d = new Date( ux * 1000 );
-    var y = d.getYear()+1900;
-    var m = d.getMonth() + 1;
-    var a   = d.getDate();
-    var h  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
-    var i   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
-    var s  = ( d.getSeconds() < 10 ) ? '0' + d.getSeconds() : d.getSeconds();
+    var m = ("0"+d.getMonth()).slice(-2);
+    var a = ("0"+d.getDate()).slice(-2);
+    var h = ("0"+d.getHours()).slice(-2);
+    var i = ("0"+d.getMinutes()).slice(-2);
     return m+"/"+a+" "+h+":"+i;
 };
 
