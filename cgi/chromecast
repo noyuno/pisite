@@ -8,8 +8,8 @@ import time
 import cgitb
 cgitb.enable()
 
-print("Content-Type: application/json")    # HTML is following
-print()                             # blank line, end of headers
+print("Content-Type: application/json")
+print()
 
 c = pychromecast.Chromecast("ba8e4e24-ddff-a0d5-0b49-d5f06f7cec66.local")
 c.wait()
