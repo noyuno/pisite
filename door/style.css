@@ -40,8 +40,17 @@ input {
         white-space: nowrap;
         width: 99%;
     }
+
+    .control {
+        width: 28%;
+    }
 }
 
+@media not screen and (max-device-width:480px) {
+    .control {
+        width: 100px;
+    }
+}
 .scroll {
     padding: 0px 0px 0px 0px!important;
     margin: 0px 0px 0px 0px!important;
