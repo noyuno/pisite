@@ -31,20 +31,24 @@ var parse_result = function (d) {
             "<td>" + d.data[i].status + 
             "<td>" + d.data[i].user + "</tr>");
     }
-    if (d.data[0]) {
+    var current = ""
+    if (d.data && d.data[0]) {
         current = d.data[0].status;
-    }
-    if (current == "open") {
-        $("#open").css("background-color", "yellow");
-        $("#close").css("background-color", "white");
+        if (current == "open") {
+            $("#open").css("background-color", "yellow");
+            $("#close").css("background-color", "white");
+        } else {
+            $("#open").css("background-color", "white");
+            $("#close").css("background-color", "lightgreen");
+        }
     } else {
         $("#open").css("background-color", "white");
-        $("#close").css("background-color", "lightgreen");
+        $("#close").css("background-color", "white");
     }
     if (d.status == "success") {
         $("#status").text(current);
     } else {
-        $("#status").text(d.status + ": " + current);
+        $("#status").text(d.status + ": " + d.error);
     }
 };
 

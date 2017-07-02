@@ -43,14 +43,18 @@ else:
     # insert
     now = int(time.time())
     if 'insert' in args:
-        if "user" in args and "door" in args and "status" in args:
+        if not "status" in args:
+            d["status"] = 'failure'
+            d["error"] = "args.status"
+        elif not "user" in args:
+            d["status"] = "failure"
+            d["error"] = "args.user"
+        else:
             c.execute('''insert into events values(?, ?, ?, ?)''', 
                 (now, args["user"].value, args["door"].value, args["status"].value))
-            success = True
-        else:
-            success = False
+            d["status"] = 'success'
     else:
-        success = True
+        d["status"] = 'success'
 
     # select
     since = int((datetime.fromtimestamp(now) - timedelta(days=30)).timestamp())
@@ -60,10 +64,6 @@ else:
 
     conn.commit()
     conn.close()
-    if success:
-        d["status"] = 'success'
-    else:
-        d["status"] = 'failure'
 j = json.dumps(d, indent=4,
     sort_keys=True, ensure_ascii=False, separators=(",", ": "))
 print(j)
