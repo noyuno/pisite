@@ -3,6 +3,7 @@
 import json
 import cgi
 import time
+from datetime import datetime, timedelta
 import cgitb
 import sqlite3
 cgitb.enable()
@@ -13,6 +14,7 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
+#print("Content-Type: text/html")
 print("Content-Type: application/json")
 print()
 
@@ -39,10 +41,11 @@ else:
         datetime integer, user text, door text, status text)''')
 
     # insert
+    now = int(time.time())
     if 'insert' in args:
         if "user" in args and "door" in args and "status" in args:
             c.execute('''insert into events values(?, ?, ?, ?)''', 
-                (int(time.time()), args["user"].value, args["door"].value, args["status"].value))
+                (now, args["user"].value, args["door"].value, args["status"].value))
             success = True
         else:
             success = False
@@ -50,7 +53,9 @@ else:
         success = True
 
     # select
-    c.execute('select * from events where door=? order by datetime desc', (args['door'].value,))
+    since = int((datetime.fromtimestamp(now) - timedelta(days=30)).timestamp())
+
+    c.execute('select * from events where door=? and datetime>? order by datetime desc', (args['door'].value, since))
     d["data"] = c.fetchall()
 
     conn.commit()

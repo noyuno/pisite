@@ -31,7 +31,9 @@ var parse_result = function (d) {
             "<td>" + d.data[i].status + 
             "<td>" + d.data[i].user + "</tr>");
     }
-    current = d.data[0].status;
+    if (d.data[0]) {
+        current = d.data[0].status;
+    }
     if (current == "open") {
         $("#open").css("background-color", "yellow");
         $("#close").css("background-color", "white");
