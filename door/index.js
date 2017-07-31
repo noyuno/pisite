@@ -6,7 +6,7 @@ const updatecgi = domain + "/door/door.cgi";
 
 var datetime = function (ux) {
     var d = new Date( ux * 1000 );
-    var m = ("0"+d.getMonth()).slice(-2);
+    var m = ("0"+(d.getMonth()+1)).slice(-2);
     var a = ("0"+d.getDate()).slice(-2);
     var h = ("0"+d.getHours()).slice(-2);
     var i = ("0"+d.getMinutes()).slice(-2);
