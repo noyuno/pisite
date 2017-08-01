@@ -20,7 +20,7 @@ function writelog($buf) {
             exit();
         }
 
-        writelog("GET: verify successful");
+        writelog("GET: verify successful (" . $hubmode . ")");
         header( 'HTTP/1.1 200 "OK"', false, 200 );
         header( 'Content-Type: text/plain' );
 
@@ -31,6 +31,9 @@ function writelog($buf) {
     {
         writelog("GET: unknown hub.mode");
         header( 'HTTP/1.1 404 "Not Found (unknown hub.mode)"', false, 404 );
+        print("気象庁防災情報XMLフォーマット PubSubHubbub subscriber endpoint<br>
+Not supported on web browser<br>
+404 unknown hub.mode");
     }
 }
 
