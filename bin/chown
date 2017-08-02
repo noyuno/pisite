@@ -1,7 +1,11 @@
 #!/bin/bash -e
 
 sudo chown www-data:www-data /var/www/html/door/secret
+
 sudo chown www-data:www-data /var/www/html/jma/data
 sudo touch /var/log/jma.log
 sudo chown www-data:www-data /var/log/jma.log
+
+sudo mkdir -p /var/log/get-anime
+sudo chown noyuno:noyuno /var/log/get-anime
 

@@ -1,0 +1,6 @@
+User-Agent:*
+Disallow:/jma/
+Disallow:/door/
+Disallow:/cgi/
+Disallow:/data/
+
