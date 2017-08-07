@@ -1,5 +1,6 @@
 <?php
-define( 'VERIFY_TOKEN', 'abc' );
+
+define( 'VERIFY_TOKEN', file_get_contents("./secret/verify-token") );
 
 function writelog($buf) {
     $fp = fopen("/var/log/jma.log", "a+");
@@ -9,7 +10,7 @@ function writelog($buf) {
 
 function error($text) {
     writelog($text);
-    header( 'HTTP/1.1 404 "Unprocessable Entity"', false, 404 );
+    header( 'HTTP/1.1 404 "Not Found"', false, 404 );
     print($text . "\n");
 }
 
@@ -20,13 +21,13 @@ if( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' )
 
     if( $hubmode == 'subscribe' || $hubmode == 'unsubscribe')
     {
-        if( $_GET[ 'hub_verify_token' ] != VERIFY_TOKEN )
+        if( $_GET[ 'hub_verify_token' ] . "\n" !== VERIFY_TOKEN )
         {
             error("GET: failed to verify");
             exit();
         }
 
-        writelog("GET: " . $hubmode . "successful");
+        writelog("GET: " . $hubmode . " successful");
         header( 'HTTP/1.1 200 "OK"', null, 200 );
         header( 'Content-Type: text/plain' );
 
