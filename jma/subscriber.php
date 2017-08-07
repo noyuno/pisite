@@ -7,6 +7,13 @@ function writelog($buf) {
     fclose($fp);
 }
 
+function error($text) {
+    writelog($text);
+    header( 'HTTP/1.1 404 "Unprocessable Entity"', false, 404 );
+    print($text . "\n");
+}
+
+if( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' )
 {
     $hubmode = @$_GET[ 'hub_mode' ];
     $hubchallenge = @$_GET[ 'hub_challenge' ];
@@ -15,13 +22,12 @@ function writelog($buf) {
     {
         if( $_GET[ 'hub_verify_token' ] != VERIFY_TOKEN )
         {
-            writelog("GET: failed to verify");
-            header( 'HTTP/1.1 404 "Unknown Request"', false, 404 );
+            error("GET: failed to verify");
             exit();
         }
 
-        writelog("GET: verify successful (" . $hubmode . ")");
-        header( 'HTTP/1.1 200 "OK"', false, 200 );
+        writelog("GET: " . $hubmode . "successful");
+        header( 'HTTP/1.1 200 "OK"', null, 200 );
         header( 'Content-Type: text/plain' );
 
         // チャレンジコードを返す
@@ -29,11 +35,9 @@ function writelog($buf) {
     }
     else
     {
-        writelog("GET: unknown hub.mode");
-        header( 'HTTP/1.1 404 "Not Found (unknown hub.mode)"', false, 404 );
-        print("気象庁防災情報XMLフォーマット PubSubHubbub subscriber endpoint<br>
-Not supported on web browser<br>
-404 unknown hub.mode");
+        error("GET: unknown hub.mode");
+        print("<br>気象庁防災情報XMLフォーマット PubSubHubbub subscriber endpoint<br>
+Not supported on web browser");
     }
 }
 
@@ -56,19 +60,39 @@ if( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
 
     if( FALSE === ( $feed = simplexml_load_string( $contents ) ) )
     {
-        writelog("POST: received empty");
+        error("POST: received invalid xml");
         exit();
     }
-    else
-    {
-        $filename = "/var/www/html/jma/data/" . date( 'Ymd-His' ).'.xml';
-        $ret = file_put_contents( $filename, $contents );
-        if ($ret == false) {
-            writelog("POST: failed to write xml to " . $filename);
+
+    writelog("POST: retrieving entries");
+
+    foreach ($feed->entry as $entry) {
+        $url = $entry->link['href'];
+        $filename = "/var/www/html/jma/data/";
+        if (basename($url) == "") {
+            $filename = $filename . date( 'Ymd-His' ).'.xml';
         } else {
-            writelog("POST: stored xml to " . $filename  . " (" . $ret . "bytes)");
+            $filename = $filename . basename($url);
         }
+        //writelog("opening " . $filename);
+        $ch = curl_init($url);
+        //writelog("execute " . $url);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $fp = fopen($filename, "w");
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_exec($ch);
+        $cerr = curl_errno($ch);
+        if (0 == $cerr) {
+            writelog("POST: stored xml to: " . $filename);
+        } else {
+            writelog("POST: xml curl error: " . curl_strerror($cerr) . ", to: " . $filename);
+        }
+        curl_close($ch);
+        fclose($fp);
     }
+    header( 'HTTP/1.1 204 "No Content"', null, 204 );
 }
 ?>
-
