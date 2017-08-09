@@ -14,6 +14,8 @@ function error($text) {
     print($text . "\n");
 }
 
+writelog($_SERVER['REQUEST_METHOD'] . "= " . $_SERVER["REQUEST_URI"]);
+
 if( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' )
 {
     $hubmode = @$_GET[ 'hub_mode' ];

@@ -8,4 +8,6 @@ sudo chown www-data:www-data /var/log/jma.log
 
 sudo mkdir -p /var/log/get-anime
 sudo chown noyuno:noyuno /var/log/get-anime
+sudo touch /var/log/get-anime.log
+sudo chown noyuno:noyuno /var/log/get-anime.log
 
