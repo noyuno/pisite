@@ -28,7 +28,6 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
             wrote = False
             for d in cache:
                 if d == cache[-1]:
-                    print("a")
                     d["cache_end"] = True
                 j = json.dumps(d, indent=4,
                     sort_keys=True, ensure_ascii=False, separators=(",", ": "))
