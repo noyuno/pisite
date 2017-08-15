@@ -4,8 +4,17 @@ import tornado.websocket
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import json
+import xml.etree.ElementTree as etree
 
+domain = "http://noyuno.mydns.jp"
 clients = []
+namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
+    'jmx_ib': 'http://xml.kishou.go.jp/jmaxml1/informationBasis1/',
+    'jmx_mete': 'http://xml.kishou.go.jp/jmaxml1/body/meteorology1/',
+    'jmx_seis': 'http://xml.kishou.go.jp/jmaxml1/body/seismology1/',
+    'jmx_eb': 'http://xml.kishou.go.jp/jmaxml1/elementBasis1/' }
+cache = []
+cachelen = 30
 
 class ChatHandler(tornado.websocket.WebSocketHandler):
 
@@ -14,18 +23,46 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
             print("new client")
             clients.append(self)
 
-    #def on_message(self, message):
-    #    for c in clients:
-    #        c.write_message(message)
+    def on_message(self, message):
+        if message == "cache":
+            wrote = False
+            for d in cache:
+                if d == cache[-1]:
+                    print("a")
+                    d["cache_end"] = True
+                j = json.dumps(d, indent=4,
+                    sort_keys=True, ensure_ascii=False, separators=(",", ": "))
+                self.write_message(j)
+                wrote = True
+            if not wrote:
+                d = { "status": False }
+                j = json.dumps(d, indent=4,
+                    sort_keys=True, ensure_ascii=False, separators=(",", ": "))
+                self.write_message(j)
+        else:
+            self.write_message("unknown command")
 
     def on_close(self):
         if self in clients:
             print("closed client")
             clients.remove(self)
 
-def send(d):
+def send(e, s):
+    d = {
+            "status": True,
+            "event": e,
+            "link": s.replace("/var/www/html", domain),
+            "title": []
+        }
+    tree = etree.parse(s)
+    for i in tree.findall(".", namespaces):
+        d["title"].append(str(i.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text))
+
     j = json.dumps(d, indent=4,
         sort_keys=True, ensure_ascii=False, separators=(",", ": "))
+    cache.append(d)
+    if len(cache) > cachelen:
+        del cache[0]
     print(j)
     for c in clients:
         c.write_message(j)
@@ -35,12 +72,10 @@ class WatchdogXMLHandler(PatternMatchingEventHandler):
         super(WatchdogXMLHandler, self).__init__(patterns=["*.xml"])
 
     def on_created(self, event):
-        d = { "event": "created", "url": event.src_path.replace("/var/www/html", "") }
-        send(d)
+        send("created", event.src_path)
 
     def on_modified(self, event):
-        d = { "event": "modified", "url": event.src_path.replace("/var/www/html", "") }
-        send(d)
+        send("modified", event.src_path)
 
 def watch(path, extension):
     observer = Observer()
