@@ -57,7 +57,7 @@ def send(e, s):
         "event": e,
         "link": s.replace("/var/www/html", domain),
         "infokind": str(tree.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text), 
-        "title": str(tree.find("./Control/Title", namespaces).text), 
+        "title": str(tree.find("./jmx_ib:Head/jmx_ib:Title", namespaces).text), 
         "target-datetime": str(tree.find("./jmx_ib:Head/jmx_ib:TargetDateTime", namespaces).text), 
         "text": str(tree.find("./jmx_ib:Head/jmx_ib:Headline/jmx_ib:Text", namespaces).text), 
         

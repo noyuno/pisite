@@ -32,7 +32,7 @@ var print = function (data) {
     var d = JSON.parse(data);
     if (d["status"]) {
 
-        var time = (new Date(d["target-datetime"]).toTimeString().split(' ')[0];
+        var time = (new Date(d["target-datetime"])).toTimeString().split(' ')[0];
         $('<tr/>')
             .append($("<td />").append($("<a />").attr("href", d['link']).text(time)))
             .append($("<td />").text(d["infokind"]))
