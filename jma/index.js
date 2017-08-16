@@ -43,7 +43,7 @@ var print = function (data) {
                 var time = dt.toTimeString().split(' ')[0];
                 var description = $(xml).find("Text")[0]["textContent"];
                 $('<tr/>')
-                    .append($("<td />").text(time))
+                    .append($("<td />").append($("<a />").attr("href", d['link']).text(time)))
                     .append($("<td />").text(type))
                     .append($("<td />").text(description))
                     .appendTo("#anime-list");
