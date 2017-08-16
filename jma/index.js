@@ -31,6 +31,15 @@ var print = function (data) {
 
     var d = JSON.parse(data);
     if (d["status"]) {
+
+        var time = (new Date(d["target-datetime"]).toTimeString().split(' ')[0];
+        $('<tr/>')
+            .append($("<td />").append($("<a />").attr("href", d['link']).text(time)))
+            .append($("<td />").text(d["infokind"]))
+            .append($("<td />").text(d["title"]))
+            .append($("<td />").text(d["text"]))
+            .appendTo("#anime-list");
+        /*
         $.ajax({
             url: d['link'],
             type: 'GET', 
@@ -49,6 +58,7 @@ var print = function (data) {
                     .appendTo("#anime-list");
             }
         });
+        */
     } else {
         console.log("status==false");
     }
@@ -94,7 +104,8 @@ window.onload = function () {
     var table = $('<table id="anime-list" />');
     $("<tr style='font-weight: bold; text-align: center' />")
         .append($("<td/>").text("時刻"))
-        .append($("<td/>").text("現象"))
+        .append($("<td/>").text("種類"))
+        .append($("<td/>").text("題"))
         .append($("<td/>").text("内容")).appendTo(table);
     $(table).appendTo("#anime");
 
