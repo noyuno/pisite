@@ -14,9 +14,12 @@ namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
     'jmx_seis': 'http://xml.kishou.go.jp/jmaxml1/body/seismology1/',
     'jmx_eb': 'http://xml.kishou.go.jp/jmaxml1/elementBasis1/' }
 cache = []
-cachelen = 30
+cachelen = 100
 
 class ChatHandler(tornado.websocket.WebSocketHandler):
+
+    def check_origin(self, origin):
+        return True
 
     def open(self):
         if self not in clients:
