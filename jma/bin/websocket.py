@@ -5,16 +5,38 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import json
 import xml.etree.ElementTree as etree
+import os
+import glob
 
 domain = "http://noyuno.mydns.jp"
+datadir = "/var/www/html/jma/data"
 clients = []
 namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
     'jmx_ib': 'http://xml.kishou.go.jp/jmaxml1/informationBasis1/',
     'jmx_mete': 'http://xml.kishou.go.jp/jmaxml1/body/meteorology1/',
     'jmx_seis': 'http://xml.kishou.go.jp/jmaxml1/body/seismology1/',
     'jmx_eb': 'http://xml.kishou.go.jp/jmaxml1/elementBasis1/' }
-cache = []
-cachelen = 100
+
+class Cache():
+    def __init__(self):
+        self.cachelength = 100
+        self.list = []
+
+    def load(self):
+        f = glob.glob(datadir + "/*.xml")
+        f.sort(key=os.path.getctime)
+        if len(f) > self.cachelength:
+            f = f[-self.cachelength:]
+        for i in f:
+            self.list.append(createdata(i))
+        print("cached " + str(len(self.list)) + " data")
+
+    def appenddata(self, data):
+        while len(self.list) > self.cachelength:
+            del self.list[0]
+        self.list.append(data)
+
+cache = Cache()
 
 class ChatHandler(tornado.websocket.WebSocketHandler):
 
@@ -29,18 +51,16 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         if message == "cache":
             wrote = False
-            for d in cache:
-                if d == cache[-1]:
-                    d["cache_end"] = True
-                j = json.dumps(d, indent=4,
-                    sort_keys=True, ensure_ascii=False, separators=(",", ": "))
-                self.write_message(j)
-                wrote = True
-            if not wrote:
-                d = { "status": False }
-                j = json.dumps(d, indent=4,
-                    sort_keys=True, ensure_ascii=False, separators=(",", ": "))
-                self.write_message(j)
+            out = {
+                "status": True, 
+                "count": len(cache.list), 
+                "data": cache.list,
+                "event": "cache"
+            }
+            j = json.dumps(out, indent=4,
+                sort_keys=True, ensure_ascii=False, separators=(",", ": "))
+            j = createout(True, cache.list, "cache")
+            self.write_message(j)
         else:
             self.write_message("unknown command")
 
@@ -49,25 +69,32 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
             print("closed client")
             clients.remove(self)
 
-def send(e, s):
+def createdata(s):
     tree = etree.parse(s)
 
     d = {
-        "status": True,
-        "event": e,
         "link": s.replace("/var/www/html", domain),
         "infokind": str(tree.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text), 
         "title": str(tree.find("./jmx_ib:Head/jmx_ib:Title", namespaces).text), 
         "target-datetime": str(tree.find("./jmx_ib:Head/jmx_ib:TargetDateTime", namespaces).text), 
-        "text": str(tree.find("./jmx_ib:Head/jmx_ib:Headline/jmx_ib:Text", namespaces).text), 
-        
+        "text": str(tree.find("./jmx_ib:Head/jmx_ib:Headline/jmx_ib:Text", namespaces).text)
     }
+    return d
 
-    j = json.dumps(d, indent=4,
+def createout(status, data, event):
+    out = {
+        "status": status, 
+        "count": len(data), 
+        "data": data, 
+        "event": event
+    }
+    return json.dumps(out, indent=4,
         sort_keys=True, ensure_ascii=False, separators=(",", ": "))
-    cache.append(d)
-    if len(cache) > cachelen:
-        del cache[0]
+
+def send(e, s):
+    d = createdata(s)
+    cache.appenddata(d)
+    j = createout(s, [ d ], e)
     print(j)
     for c in clients:
         c.write_message(j)
@@ -87,13 +114,18 @@ def watch(path, extension):
     observer = Observer()
     observer.schedule(WatchdogXMLHandler(), path, recursive=True)
     observer.start()
+    print("started file watcher")
 
-if __name__ == "__main__":
-    watch("/var/www/html/jma/data", "xml")
-
+def endpoint():
     application = tornado.web.Application([
         (r"/", ChatHandler),
     ])
     application.listen(8000)
+    print("starting tornado web endpoint")
     tornado.ioloop.IOLoop.current().start()
+
+if __name__ == "__main__":
+    cache.load()
+    watch("/var/www/html/jma/data", "xml")
+    endpoint()
 

@@ -27,6 +27,23 @@
         .hidden {
             display: none;
         }
+
+        .jmadatetime {
+            width: 100px;
+        }
+        .jmatitle {
+            width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .jmatext {
+            width: 50px;
+        }
+        #anime-list {
+            border-collapse: collapse;
+            width: 100px;
+            table-layout: fixed;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./index.js"></script>
@@ -42,7 +59,7 @@
         <div class="section" id="anime"></div>
         <div class="section" id="search-not-found" style="display: none">∅</div>
         <div class="footer" role="contentinfo">
-            気象庁防災情報XMLをPubSubHubbubで取得しWebSocketで配信しています．Powered by 気象庁
+            気象庁防災情報XMLをPubSubHubbubで取得しWebSocketで配信しています．
         </div>
     </div>
 

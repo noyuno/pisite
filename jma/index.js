@@ -1,5 +1,10 @@
 "use strict";
 
+Number.prototype.padLeft = function(base, chr){
+     var  len = (String(base || 10).length - String(this).length)+1;
+     return len > 0? new Array(len).join(chr || '0')+this : this;
+ }
+
 var zerofill = function (i) {
     var s = String(i);
     if (s.length == 1) {
@@ -29,36 +34,25 @@ var notifyarray = [];
 
 var print = function (data) {
 
-    var d = JSON.parse(data);
-    if (d["status"]) {
-
-        var time = (new Date(d["target-datetime"])).toTimeString().split(' ')[0];
-        $('<tr/>')
-            .append($("<td />").append($("<a />").attr("href", d['link']).text(time)))
-            .append($("<td />").text(d["infokind"]))
-            .append($("<td />").text(d["title"]))
-            .append($("<td />").text(d["text"]))
-            .appendTo("#anime-list");
-        /*
-        $.ajax({
-            url: d['link'],
-            type: 'GET', 
-            dataType: 'xml', 
-            timeout: 1000, 
-            error: function () { console.log('xml retrieve error'); }, 
-            success: function (xml) {
-                var type = $(xml).find("InfoKind")[0]["textContent"];
-                var dt = new Date($(xml).find("TargetDateTime")[0]["textContent"]);
-                var time = dt.toTimeString().split(' ')[0];
-                var description = $(xml).find("Text")[0]["textContent"];
-                $('<tr/>')
-                    .append($("<td />").append($("<a />").attr("href", d['link']).text(time)))
-                    .append($("<td />").text(type))
-                    .append($("<td />").text(description))
-                    .appendTo("#anime-list");
-            }
-        });
-        */
+    var o = JSON.parse(data);
+    var d = o["data"];
+    if (o["status"]) {
+        for (var i = 0; i < o["count"]; i++) {
+            var a = new Date(d[i]["target-datetime"]), dformat = [
+                (a.getMonth()+1).padLeft(),
+                a.getDate().padLeft()].join('/') +' ' +
+                [a.getHours().padLeft(),
+                a.getMinutes().padLeft()].join(':');
+            $('<tr/>')
+                .append($("<td />").addClass('jmadatetime').append($("<a />").attr("href", d[i]['link']).text(dformat)))
+                //.append($("<td />").text(d[i]["infokind"]))
+                .append($("<td />").addClass('jmatitle').text(d[i]["title"]))
+                .append($("<td />").addClass('jmatext').text(d[i]["text"]))
+                .appendTo("#anime-list");
+        }
+        $('body').animate({
+            scrollTop: $(document).height()
+        }, 1000);
     } else {
         console.log("status==false");
     }
@@ -103,10 +97,10 @@ var notify;
 window.onload = function () {
     var table = $('<table id="anime-list" />');
     $("<tr style='font-weight: bold; text-align: center' />")
-        .append($("<td/>").text("時刻"))
-        .append($("<td/>").text("種類"))
-        .append($("<td/>").text("題"))
-        .append($("<td/>").text("内容")).appendTo(table);
+        .append($("<td/>").addClass('jmadatetime').text("対象時刻"))
+        //.append($("<td/>").text("種類"))
+        .append($('<td />').addClass('jmatitle').text("題"))
+        .append($('<td />').addClass('jmatext').text("内容")).appendTo(table);
     $(table).appendTo("#anime");
 
     var ws = new WebSocket('ws://noyuno.mydns.jp:8000');
