@@ -1,123 +1,126 @@
-[
-  {
-    "name": "blog",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/blog.git"
-      }
+{
+    "primary": "dotfiles",
+    "repositories": [
+        {
+            "name": "blog",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/blog.git"
+            }
+            ]
+        },
+        {
+            "name": "calc.vim",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/calc.vim.git"
+            }
+            ]
+        },
+        {
+            "name": "dotfiles",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/dotfiles.git"
+            },
+            {
+                "name": "pi",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/dotfiles.git"
+            }
+            ]
+        },
+        {
+            "name": "eng",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/eng.git"
+            }
+            ]
+        },
+        {
+            "name": "labo",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/labo.git"
+            }
+            ]
+        },
+        {
+            "name": "leg",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/leg.git"
+            }
+            ]
+        },
+        {
+            "name": "noyuno.github.io",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "https://github.com/noyuno/noyuno.github.io.git"
+            },
+            {
+                "name": "pi",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/noyuno.github.io.git"
+            }
+            ]
+        },
+        {
+            "name": "paint",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/paint.git"
+            }
+            ]
+        },
+        {
+            "name": "pass",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/pass.git"
+            }
+            ]
+        },
+        {
+            "name": "pisite",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/pisite.git"
+            },
+            {
+                "name": "pi",
+                "url": "http://git.noyuno.mydns.jp/git/noyuno/pisite.git"
+            }
+            ]
+        },
+        {
+            "name": "unite-latex-symbols",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/unite-latex-symbols.git"
+            }
+            ]
+        },
+        {
+            "name": "unite-uri",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/unite-uri.git"
+            }
+            ]
+        }
     ]
-  },
-  {
-    "name": "calc.vim",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/calc.vim.git"
-      }
-    ]
-  },
-  {
-    "name": "dotfiles",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/dotfiles.git"
-      },
-      {
-        "name": "pi",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/dotfiles.git"
-      }
-    ]
-  },
-  {
-    "name": "eng",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/eng.git"
-      }
-    ]
-  },
-  {
-    "name": "labo",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/labo.git"
-      }
-    ]
-  },
-  {
-    "name": "leg",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/leg.git"
-      }
-    ]
-  },
-  {
-    "name": "noyuno.github.io",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "https://github.com/noyuno/noyuno.github.io.git"
-      },
-      {
-        "name": "pi",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/noyuno.github.io.git"
-      }
-    ]
-  },
-  {
-    "name": "paint",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/paint.git"
-      }
-    ]
-  },
-  {
-    "name": "pass",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/pass.git"
-      }
-    ]
-  },
-  {
-    "name": "pisite",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/pisite.git"
-      },
-      {
-        "name": "pi",
-        "url": "http://git.noyuno.mydns.jp/git/noyuno/pisite.git"
-      }
-    ]
-  },
-  {
-    "name": "unite-latex-symbols",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/unite-latex-symbols.git"
-      }
-    ]
-  },
-  {
-    "name": "unite-uri",
-    "remote": [
-      {
-        "name": "origin",
-        "url": "git@github.com:noyuno/unite-uri.git"
-      }
-    ]
-  }
-]
+}
 

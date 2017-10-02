@@ -33,7 +33,7 @@ class Cache():
 
     def appenddata(self, data):
         while len(self.list) > self.cachelength:
-            del self.list[0]
+            self.list.pop(0)
         self.list.append(data)
 
 cache = Cache()

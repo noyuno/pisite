@@ -1,4 +1,11 @@
 #!/bin/bash -e
+
+log=/var/log/jmarm.log
+data=/var/www/html/jma/data
 (
-    find /var/www/html/jma/data -ctime +3 -exec rm -f {} \;
-) >/dev/null
+    /home/noyuno/dotfiles/bin/now
+    du -h $data
+    find $data -ctime +3 -print -exec rm -f {} \;
+    du -h $data
+) 1>>$log 2>&1
+
