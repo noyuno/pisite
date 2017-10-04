@@ -89,7 +89,7 @@ var domain = "http://noyuno.mydns.jp";
 
 $.get(domain + '/data/anime-keyword', function (k) {
     keyword = $.grep(k.split(/\n/), function (e) { return e !== ""; });
-    $.getJSON(domain + "/data/animeall", function (d) {
+    $.getJSON(domain + "/data/anime.json", function (d) {
         data = d;
         print();
         window.setInterval(print, 1000 * 60);

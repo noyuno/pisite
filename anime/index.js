@@ -125,7 +125,7 @@ var print = function () {
 
 $.get('/data/anime-keyword', function (k) {
     keyword = $.grep(k.split(/\n/), function (e) { return e !== ""; });
-    $.getJSON("/data/animeall", function (d) {
+    $.getJSON("/data/anime.json", function (d) {
         data = d;
         print();
     });

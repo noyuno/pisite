@@ -18,8 +18,9 @@ sleep_time = 60 * 60 * 12
 user = "shiro51"
 keywordfilename = "https://raw.githubusercontent.com/noyuno/dotfiles/master/list/anime-keyword"
 keywordcachefilename = "/var/www/html/data/anime-keyword"
-animeallfilename = "/var/www/html/data/animeall"
-animefilename = "/var/www/html/data/anime"
+animeallfilename = "/var/www/html/data/animeall.ical"
+animefilename = "/var/www/html/data/anime.ical"
+animealljsonfilename = "/var/www/html/data/animeall.json"
 
 def get():
     url = "http://cal.syoboi.jp/rss2.php?usr=" + user + "&" + \
@@ -59,7 +60,6 @@ def main():
     c = Calendar.from_ical(get())
     outcal = Calendar()
     outcal["name"] = "Anime calendar"
-
     keywords_failure = None
     keywords = []
     try:
@@ -90,11 +90,15 @@ def main():
         evsubtitle = t[4]
         evch = t[5]
 
+        # anime.ical
         contains = containskeyword(evtitle) or containskeyword(evsubtitle)
         if contains:
             #print(evtitle)
             ev["summary"] = evalert + evch + " " + evtitle + " " + evnum + " " + evsubtitle
             outcal.add_component(ev)
+
+        # animeall.json
+
     f = None
     try:
         f = open(animefilename, "wb")
