@@ -94,7 +94,7 @@ def main():
         contains = containskeyword(evtitle) or containskeyword(evsubtitle)
         if contains:
             #print(evtitle)
-            ev["summary"] = evalert + evch + " " + evtitle + " " + evnum + " " + evsubtitle
+            ev["summary"] = evalert + evtitle + " " + evnum + " " + evsubtitle
             outcal.add_component(ev)
 
         # animeall.json
