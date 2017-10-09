@@ -22,10 +22,11 @@ destword=$parent/data/anime-keyword
 
 mkdir -p $(dirname $dest)
 while true; do
+    sleep 2
     curl -sL $src | jq . -M >$dest
     curl -sL $srcword >$destword
     sleep $((60*60*12))
     #echo "$($HOME/dotfiles/bin/now) ok" >>$log
 done
-#) 1>$log 2>&1
+#) 1>>$log 2>&1
 
