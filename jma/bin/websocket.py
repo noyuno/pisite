@@ -7,6 +7,12 @@ import json
 import xml.etree.ElementTree as etree
 import os
 import glob
+import logging
+
+logging.basicConfig(
+    filename="/var/log/jmaws.log",
+    level=logging.INFO,
+    format='%(asctime)s %(message)s')
 
 domain = "http://noyuno.mydns.jp"
 datadir = "/var/www/html/jma/data"
@@ -29,10 +35,10 @@ class Cache():
             f = f[-self.cachelength:]
         for i in f:
             self.list.append(createdata(i))
-        print("cached " + str(len(self.list)) + " data")
+        logging.info("cached " + str(len(self.list)) + " data")
 
     def appenddata(self, data):
-        while len(self.list) > self.cachelength:
+        while len(self.list) - 1 > self.cachelength:
             self.list.pop(0)
         self.list.append(data)
 
@@ -45,7 +51,7 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         if self not in clients:
-            print("new client")
+            logging.info("new client")
             clients.append(self)
 
     def on_message(self, message):
@@ -66,7 +72,7 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
 
     def on_close(self):
         if self in clients:
-            print("closed client")
+            logging.info("closed client")
             clients.remove(self)
 
 def createdata(s):
@@ -93,9 +99,9 @@ def createout(status, data, event):
 
 def send(e, s):
     d = createdata(s)
+    logging.info(d["link"])
     cache.appenddata(d)
     j = createout(s, [ d ], e)
-    print(j)
     for c in clients:
         c.write_message(j)
 
@@ -114,14 +120,14 @@ def watch(path, extension):
     observer = Observer()
     observer.schedule(WatchdogXMLHandler(), path, recursive=True)
     observer.start()
-    print("started file watcher")
+    logging.info("started file watcher")
 
 def endpoint():
     application = tornado.web.Application([
         (r"/", ChatHandler),
     ])
     application.listen(8000)
-    print("starting tornado web endpoint")
+    logging.info("starting tornado web endpoint")
     tornado.ioloop.IOLoop.current().start()
 
 if __name__ == "__main__":
