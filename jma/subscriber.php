@@ -14,7 +14,8 @@ function error($text) {
     print($text . "\n");
 }
 
-writelog($_SERVER['REQUEST_METHOD'] . "= " . $_SERVER["REQUEST_URI"]);
+writelog($_SERVER['REQUEST_METHOD'] . "= " . $_SERVER["REQUEST_URI"] . 
+    " from " . gethostbyaddr($_SERVER['REMOTE_ADDR']));
 
 if( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' )
 {
@@ -53,21 +54,19 @@ if( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
     //{
     //    $sign = explode( '=', $_SERVER[ 'HTTP_X_HUB_SIGNATURE' ] );
     //    writelog("sign = " . $sign[1] . ", VERIFY_TOKEN = " . hash_hmac('sha1', $contents, VERIFY_TOKEN));
-    //    if( $sign[ 1 ] != hash_hmac( 'sha1', $contents, VERIFY_TOKEN ) )
-    //    {
-    //        writelog("POST: failed to verify");
-    //        header( 'HTTP/1.1 404 "Invalid X-Hub-Signature"', false, 404 );
-    //        exit();
+    //    if ($sign[1] != VERIFY_TOKEN) {
+    //        writelog("warning: failed to verify");
+    //        //header( 'HTTP/1.1 404 "Invalid X-Hub-Signature"', false, 404 );
     //    }
     //}
 
     if( FALSE === ( $feed = simplexml_load_string( $contents ) ) )
     {
-        error("POST: received invalid xml");
+        error("received invalid xml");
         exit();
     }
 
-    writelog("POST: retrieving entries");
+    //writelog("retrieving entries");
 
     foreach ($feed->entry as $entry) {
         $url = $entry->link['href'];
@@ -89,9 +88,9 @@ if( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
         curl_exec($ch);
         $cerr = curl_errno($ch);
         if (0 == $cerr) {
-            writelog("POST: stored xml to: " . $filename);
+            writelog("stored xml to: " . $filename);
         } else {
-            writelog("POST: xml curl error: " . curl_strerror($cerr) . ", to: " . $filename);
+            writelog("xml curl error: " . curl_strerror($cerr) . ", to: " . $filename);
         }
         curl_close($ch);
         fclose($fp);

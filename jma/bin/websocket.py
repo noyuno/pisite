@@ -8,20 +8,26 @@ import xml.etree.ElementTree as etree
 import os
 import glob
 import logging
+import time
+import threading
 
 logging.basicConfig(
     filename="/var/log/jmaws.log",
     level=logging.INFO,
-    format='%(asctime)s %(message)s')
+    format='%(asctime)s %(message)s', 
+    datefmt='%Y%m%d-%H%M%S')
 
+port = 8000
 domain = "http://noyuno.mydns.jp"
 datadir = "/var/www/html/jma/data"
+extension = "xml"
 clients = []
 namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
     'jmx_ib': 'http://xml.kishou.go.jp/jmaxml1/informationBasis1/',
     'jmx_mete': 'http://xml.kishou.go.jp/jmaxml1/body/meteorology1/',
     'jmx_seis': 'http://xml.kishou.go.jp/jmaxml1/body/seismology1/',
     'jmx_eb': 'http://xml.kishou.go.jp/jmaxml1/elementBasis1/' }
+watcher_restart = 60 * 30
 
 class Cache():
     def __init__(self):
@@ -116,22 +122,31 @@ class WatchdogXMLHandler(PatternMatchingEventHandler):
     #def on_modified(self, event):
     #    send("modified", event.src_path)
 
-def watch(path, extension):
-    observer = Observer()
-    observer.schedule(WatchdogXMLHandler(), path, recursive=True)
-    observer.start()
-    logging.info("started file watcher")
+class WatchThread(threading.Thread):
+    def __init__(self):
+        super(WatchThread, self).__init__()
+
+    def run(self):
+        logging.info("starting file watcher")
+        while True:
+            observer = Observer()
+            observer.schedule(WatchdogXMLHandler(), datadir, recursive=True)
+            observer.start()
+            time.sleep(watcher_restart)
+            observer.stop()
+            logging.info("restarting file watcher")
 
 def endpoint():
     application = tornado.web.Application([
         (r"/", ChatHandler),
     ])
-    application.listen(8000)
     logging.info("starting tornado web endpoint")
+    application.listen(port)
     tornado.ioloop.IOLoop.current().start()
 
 if __name__ == "__main__":
     cache.load()
-    watch("/var/www/html/jma/data", "xml")
+    watch = WatchThread()
+    watch.start()
     endpoint()
 
