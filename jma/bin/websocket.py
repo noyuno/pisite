@@ -27,7 +27,7 @@ namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
     'jmx_mete': 'http://xml.kishou.go.jp/jmaxml1/body/meteorology1/',
     'jmx_seis': 'http://xml.kishou.go.jp/jmaxml1/body/seismology1/',
     'jmx_eb': 'http://xml.kishou.go.jp/jmaxml1/elementBasis1/' }
-watcher_restart = 60 * 30
+watcher_restart = 60
 
 class Cache():
     def __init__(self):
@@ -128,13 +128,13 @@ class WatchThread(threading.Thread):
 
     def run(self):
         logging.info("starting file watcher")
+        logging.info("watcher is going to restart every " + str(watcher_restart) + " seconds")
         while True:
             observer = Observer()
             observer.schedule(WatchdogXMLHandler(), datadir, recursive=True)
             observer.start()
             time.sleep(watcher_restart)
             observer.stop()
-            logging.info("restarting file watcher")
 
 def endpoint():
     application = tornado.web.Application([
