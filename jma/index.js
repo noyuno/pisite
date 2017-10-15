@@ -5,29 +5,6 @@ Number.prototype.padLeft = function(base, chr){
      return len > 0? new Array(len).join(chr || '0')+this : this;
  }
 
-var zerofill = function (i) {
-    var s = String(i);
-    if (s.length == 1) {
-        return "0" + s;
-    } else {
-        return s;
-    }
-};
-
-var slim = function (s, n) {
-    var t = 0;
-    var i = 0;
-    for ( ; i < s.length && t < n; i++) {
-        var c = s.charCodeAt(i);
-        if ( (c >= 0x0 && c < 0x81) || (c == 0xf8f0) || (c >= 0xff61 && c < 0xffa0) || (c >= 0xf8f1 && c < 0xf8f4)) {
-            t += 1;
-        } else {
-            t += 2;
-        }
-    }
-    return s.substr(0, i);
-};
-
 var keyword = [];
 var data;
 var notifyarray = [];
