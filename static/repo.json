@@ -120,6 +120,15 @@
                 "url": "git@github.com:noyuno/unite-uri.git"
             }
             ]
+        },
+        {
+            "name": "lib",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/lib.git"
+            }
+            ]
         }
     ]
 }
