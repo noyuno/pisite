@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+USER=shiro51
 parent=/var/www/html
 #log=/var/log/get-anime/$($HOME/dotfiles/bin/now)
 log=/var/log/get-anime.log
@@ -15,7 +16,7 @@ mkdir -p $(dirname $log)
 #(
 #set -x
 
-src='http://cal.syoboi.jp/rss2.php?usr=shiro51&filter=0&count=1000&days=14&titlefmt=%24(StTime)%01%24(Mark)%24(MarkW)%01%24(ShortTitle)%01%24(SubTitleB)%01%24(ChName)&alt=json'
+src='http://cal.syoboi.jp/rss2.php?usr='$USER'&filter=0&count=1000&days=14&titlefmt=%24(StTime)%01%24(Mark)%24(MarkW)%01%24(ShortTitle)%01%24(SubTitleB)%01%24(ChName)&alt=json'
 srcword='https://raw.githubusercontent.com/noyuno/dotfiles/master/list/anime-keyword'
 dest=$parent/data/anime-all.json
 destword=$parent/data/anime-keyword
