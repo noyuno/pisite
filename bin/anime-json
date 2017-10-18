@@ -17,7 +17,7 @@ mkdir -p $(dirname $log)
 
 src='http://cal.syoboi.jp/rss2.php?usr=shiro51&filter=0&count=1000&days=14&titlefmt=%24(StTime)%01%24(Mark)%24(MarkW)%01%24(ShortTitle)%01%24(SubTitleB)%01%24(ChName)&alt=json'
 srcword='https://raw.githubusercontent.com/noyuno/dotfiles/master/list/anime-keyword'
-dest=$parent/data/anime.json
+dest=$parent/data/anime-all.json
 destword=$parent/data/anime-keyword
 
 mkdir -p $(dirname $dest)
@@ -25,6 +25,7 @@ while true; do
     sleep 2
     curl -sL $src | jq . -M >$dest
     curl -sL $srcword >$destword
+    python3 $parent/bin/anime-json-extract
     sleep $((60*60*12))
     #echo "$($HOME/dotfiles/bin/now) ok" >>$log
 done
