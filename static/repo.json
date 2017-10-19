@@ -108,7 +108,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "git@github.com:noyuno/unite-latex-symbols.git"
+                "url": "git@github.com:noyuno/unite-latexsymbols.git"
             }
             ]
         },
@@ -127,6 +127,15 @@
             {
                 "name": "origin",
                 "url": "git@github.com:noyuno/lib.git"
+            }
+            ]
+        },
+        {
+            "name": "YukariAkiyamaHubotSlack",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/YukariAkiyamaHubotSlack.git"
             }
             ]
         }
