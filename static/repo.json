@@ -104,7 +104,7 @@
             ]
         },
         {
-            "name": "unite-latex-symbols",
+            "name": "unite-latexsymbols",
             "remotes": [
             {
                 "name": "origin",
