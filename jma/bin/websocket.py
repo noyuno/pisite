@@ -40,7 +40,9 @@ class Cache():
         if len(f) > self.cachelength:
             f = f[-self.cachelength:]
         for i in f:
-            self.list.append(createdata(i))
+            d = createdata(i)
+            if d is not None:
+                self.list.append(d)
         logging.info("cached " + str(len(self.list)) + " data")
 
     def appenddata(self, data):
@@ -82,15 +84,19 @@ class ChatHandler(tornado.websocket.WebSocketHandler):
             clients.remove(self)
 
 def createdata(s):
-    tree = etree.parse(s)
+    d = None
+    try:
+        tree = etree.parse(s)
 
-    d = {
-        "link": s.replace("/var/www/html", domain),
-        "infokind": str(tree.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text), 
-        "title": str(tree.find("./jmx_ib:Head/jmx_ib:Title", namespaces).text), 
-        "target-datetime": str(tree.find("./jmx_ib:Head/jmx_ib:TargetDateTime", namespaces).text), 
-        "text": str(tree.find("./jmx_ib:Head/jmx_ib:Headline/jmx_ib:Text", namespaces).text)
-    }
+        d = {
+            "link": s.replace("/var/www/html", domain),
+            "infokind": str(tree.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text), 
+            "title": str(tree.find("./jmx_ib:Head/jmx_ib:Title", namespaces).text), 
+            "target-datetime": str(tree.find("./jmx_ib:Head/jmx_ib:TargetDateTime", namespaces).text), 
+            "text": str(tree.find("./jmx_ib:Head/jmx_ib:Headline/jmx_ib:Text", namespaces).text)
+        }
+    except:
+        pass
     return d
 
 def createout(status, data, event):
@@ -105,11 +111,12 @@ def createout(status, data, event):
 
 def send(e, s):
     d = createdata(s)
-    logging.info(d["link"])
-    cache.appenddata(d)
-    j = createout(s, [ d ], e)
-    for c in clients:
-        c.write_message(j)
+    if d is not None:
+        logging.info(d["link"])
+        cache.appenddata(d)
+        j = createout(s, [ d ], e)
+        for c in clients:
+            c.write_message(j)
 
 class WatchdogXMLHandler(PatternMatchingEventHandler):
     def __init__(self):
