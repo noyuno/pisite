@@ -138,6 +138,16 @@
                 "url": "git@github.com:noyuno/YukariAkiyamaHubotSlack.git"
             }
             ]
+        },
+        {
+            "name": "lgo",
+            "path": "go/src/github.com/noyuno/lgo",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/lgo.git"
+            }
+            ]
         }
     ]
 }
