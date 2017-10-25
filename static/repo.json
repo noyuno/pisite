@@ -64,7 +64,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "https://github.com/noyuno/noyuno.github.io.git"
+                "url": "git@github.com:noyuno/noyuno.github.io.git"
             },
             {
                 "name": "pi",
