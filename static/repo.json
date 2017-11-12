@@ -148,6 +148,15 @@
                 "url": "git@github.com:noyuno/lgo.git"
             }
             ]
+        },
+        {
+            "name": "chrome-copy-title",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/chrome-copy-title.git"
+            }
+            ]
         }
     ]
 }
