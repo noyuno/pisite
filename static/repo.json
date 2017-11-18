@@ -157,6 +157,15 @@
                 "url": "git@github.com:noyuno/chrome-copy-title.git"
             }
             ]
+        }, 
+        {
+            "name": "fonts",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/fonts.git"
+            }
+            ]
         }
     ]
 }
