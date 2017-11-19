@@ -165,13 +165,13 @@ function search() {
 
 var notify;
 
-window.onload = function () {
+(function(){
     window.Notification.requestPermission();
     $("#search").focus();
-};
+    window.setInterval(function () {
+        print();
+        search();
+    }, 1000 * 60);
+})();
 
-window.setInterval(function () {
-    print();
-    search();
-}, 1000 * 60);
 

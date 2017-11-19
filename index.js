@@ -1,5 +1,3 @@
-{
-
 const domain = "//noyuno.mydns.jp";
 const cgi = "/cgi/chromecast";
 
@@ -89,12 +87,10 @@ var chromecast = function () {
     $.get(domain + cgi, parse_chromecast);
 };
 
-window.onload = function () {
+(function(){
     disk();
     init_chromecast();
     chromecast();
     window.setInterval(chromecast, 1000 * 60);
-};
-
-}
+})();
 

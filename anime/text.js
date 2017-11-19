@@ -1,6 +1,6 @@
 "use strict";
 
-window.onload = function () {
+(function(){
     var zerofill = function (i) {
         var s = String(i);
         if (s.length == 1) {
@@ -96,5 +96,5 @@ window.onload = function () {
             window.setInterval(print, 1000 * 60);
         });
     });
-};
+})();
 
