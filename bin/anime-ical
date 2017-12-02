@@ -4,7 +4,6 @@ from datetime import *
 from icalendar import Calendar, Event
 import argparse
 import os
-import pytz
 import subprocess
 import sys
 import time
