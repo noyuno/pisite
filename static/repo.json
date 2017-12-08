@@ -150,6 +150,16 @@
             ]
         },
         {
+            "name": "gostruct",
+            "path": "go/src/github.com/noyuno/gostruct",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@github.com:noyuno/gostruct.git"
+            }
+            ]
+        },
+        {
             "name": "chrome-copy-title",
             "remotes": [
             {
