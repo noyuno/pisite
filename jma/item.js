@@ -9,9 +9,13 @@ var keyword = [];
 var data;
 var notifyarray = [];
 
-var print = function (data) {
+var print = function (n) {
     $.ajax({
+        dataType: 'xml', 
+        url:"/jma/data/"+n, 
+        success: function (xml) {
 
+        }
     });
 };
 
@@ -48,24 +52,28 @@ function search() {
 }
 
 var notify;
+var args;
+
+var getparams = function () {
+    args = new Object;
+    var pair=location.search.substring(1).split('&');
+    for(var i=0;pair[i];i++) {
+        var kv = pair[i].split('=');
+        args[kv[0]]=kv[1];
+    }
+};
 
 window.onload = function () {
+    getparams();
+
     var table = $('<table id="itemroot-list" />');
     $("<tr style='font-weight: bold; text-align: center' />")
-        .append($("<td/>").addClass('jmadatetime').text("対象時刻"))
-        //.append($("<td/>").text("種類"))
         .append($('<td />').addClass('jmatitle').text("題"))
         .append($('<td />').addClass('jmatext').text("内容")).appendTo(table);
     $(table).appendTo("#itemroot");
 
-    var ws = new WebSocket('ws://noyuno.mydns.jp:8000');
-    ws.onopen = function () { ws.send('cache'); };
-    ws.onerror = function (e) { console.log(e); };
-    ws.onmessage = function (e) {
-        print(e.data);
-    };
+    print(args["n"]);
 
-    window.Notification.requestPermission();
     $("#search").focus();
 };
 
