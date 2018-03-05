@@ -214,8 +214,8 @@ footer {
       else window.addEventListener('load', cb);
     </script>
     <script async src="material.min.js"></script>
-    <script async src="jquery-3.2.1.min.js"></script>
-    <script async src="Chart.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script async src="index.js"> </script>
     <script async src="/anime/text.js"> </script>
 
@@ -307,7 +307,21 @@ footer {
                 </div>
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
                     <div class="mdl-card__media">
-                        <canvas id="myChart"></canvas>
+                        <div id="humidchart"></div>
+                    </div>
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Status</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        湿度・温度
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/humidity">View</a>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+                    <div class="mdl-card__media">
+                        <div width="140px" id="diskchart"></div>
                     </div>
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Status</h2>

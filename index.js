@@ -1,45 +1,86 @@
+"use strict"
 const domain = "//noyuno.mydns.jp";
 const cgi = "/cgi/chromecast";
+Number.prototype.padLeft = function(base, chr){
+     var  len = (String(base || 10).length - String(this).length)+1;
+     return len > 0? new Array(len).join(chr || '0')+this : this;
+ }
 
 var disk = function () {
-    var canvas = document.getElementById("myChart")
-    canvas.width = 140;
-    var ctx = canvas.getContext("2d");
-    var r = new XMLHttpRequest();
-    r.onload = function () {
-        var d = JSON.parse(r.responseText);
-        var myChart = new Chart(ctx, {
-            type: 'pie', 
-            data: {
-                labels: ["used", "free"], 
-                datasets: [{
-                    data: [d.used, d.free],
-                    backgroundColor: [
-                        "#2ecc71",
-                        "#3498db",
-                        "#95a5a6",
-                        "#9b59b6",
-                        "#f1c40f",
-                        "#e74c3c",
-                        "#34495e"
-                    ],
-                }]
-            }, 
-            options: {
-                title: {
-                    display: true,
-                    text: "disk usage [GiB]"
-                }
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawDisk);
+
+    function drawDisk () {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Usage");
+        data.addColumn("number", "Slices");
+        var r = new XMLHttpRequest();
+        r.onload = function () {
+            var d = JSON.parse(r.responseText);
+            data.addRows([
+                ["Used", Number(d.used)], 
+                ["Free", Number(d.free)]
+            ]);
+            var option={
+                "legend":"none"
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('diskchart'));
+            chart.draw(data, option);
+        };
+        r.onerror = function () {
+            console.log("unable to get disk usage");
+        };
+        r.open('GET', domain + "/disk.php", true);
+        r.send(null);
+    }
+};
+
+function csv(d, f) {
+    var row = d.split("\n");
+    var arr = new Array();
+    for(var i = 0; i<row.length;i++){
+        if (row[i]=="") {
+            continue
+        }
+        var t = row[i].split(",");
+        arr[i]=[];
+        for (var j = 0; j <t.length; j++) {
+            if (f[j]) {
+                arr[i][j]=Number(t[j]);
+            } else {
+                arr[i][j]=t[j];
             }
-            });
-    };
-    r.onerror = function () {
-        console.log("error");
-    };
+        }
+    }
+    return arr
+}
 
-    r.open('GET', domain + "/disk.php", true);
-    r.send(null);
+var humidity = function () {
+    google.charts.load('current', {packages: ['corechart', "line"]});
+    google.charts.setOnLoadCallback(drawHumidity);
 
+    function drawHumidity () {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Datetime");
+        data.addColumn("number", "Temperature");
+        data.addColumn("number", "Humidity");
+        var r = new XMLHttpRequest();
+        r.onload = function () {
+            data.addRows(csv(r.responseText, [0, 1, 1]));
+            var option={
+                "legend":"none"
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('humidchart'));
+            chart.draw(data, option);
+        };
+        r.onerror = function () {
+            console.log("unable to get disk usage");
+        };
+        var date=new Date();
+        var ym=String(date.getFullYear()) + (date.getMonth()+1).padLeft()
+        r.open('GET', domain + "/humidity/data/" + ym, true);
+        r.send(null);
+    }
 };
 
 var parse_chromecast = function (d) {
@@ -89,6 +130,7 @@ var chromecast = function () {
 
 (function(){
     disk();
+    humidity();
     init_chromecast();
     chromecast();
     window.setInterval(chromecast, 1000 * 60);
