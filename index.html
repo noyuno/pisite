@@ -252,11 +252,11 @@ footer {
         <main class="mdl-layout__content">
             <div class="mdl-grid portfolio-max-width">
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
-                    <div class="mdl-card__media">
-                        <img class="article-image" src=" images/git.png" border="0" alt="">
-                    </div>
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Git</h2>
+                    </div>
+                    <div class="mdl-card__media">
+                        <img class="article-image" src=" images/git.png" border="0" alt="">
                     </div>
                     <div class="mdl-card__supporting-text">
                         Git repositories server powered by GitBucket
@@ -285,13 +285,12 @@ footer {
                     <div class="mdl-card__title">
                         <h2 id="chromecast_title" class="mdl-card__title-text">Chromecast</h2>
                     </div>
-                    <div id="chromecast" class="mdl-card__supporting-text">
-                    </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <a id="play" class="player mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent">&#x25b6;</a>
                         <a id="pause" class="player mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent">&#x23f8;</a>
                         <a id="stop" class="player mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent">⏹</a>
                     </div>
+                    <div id="chromecast" class="mdl-card__supporting-text"></div>
                 </div>
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
                     <div class="mdl-card__media">
@@ -306,25 +305,21 @@ footer {
                     </div>
                 </div>
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
-                    <div class="mdl-card__media">
-                        <div id="humidchart"></div>
-                    </div>
                     <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Status</h2>
+                        <h2 class="mdl-card__title-text">Humidity</h2>
                     </div>
-                    <div class="mdl-card__supporting-text">
-                        湿度・温度
-                    </div>
+                    <div class="mdl-card__media"><div id="humidchart"></div></div>
+                    <div class="mdl-card__supporting-text">湿度・温度</div>
                     <div class="mdl-card__actions mdl-card--border">
                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/humidity">View</a>
                     </div>
                 </div>
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
-                    <div class="mdl-card__media">
-                        <div width="140px" id="diskchart"></div>
-                    </div>
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Status</h2>
+                    </div>
+                    <div class="mdl-card__media">
+                        <div width="140px" id="diskchart"></div>
                     </div>
                     <div class="mdl-card__supporting-text">
                         Server status
