@@ -7,21 +7,13 @@
     <link rel = "stylesheet" type = "text/css" href = "../black.css">
     <style>
         * {
-            font-size:17px;
-        }
-        table {
-            white-space: nowrap;
-            table-layout: auto 
-        }
-
-        td {
-            padding-right: 0.5em 
+            font-size:16px;
         }
         hr:after {
             top: -10px;
         }
         .section {
-            margin: 1em 0em 1em 0em;
+            margin: 1em 1em 0em 0em;
             width: auto;
         }
         .hidden {
@@ -29,34 +21,31 @@
         }
 
         .jmadatetime {
-            width: 100px;
+            width: 10%;
         }
         .jmatitle {
-            width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
+            width: 20%;
         }
         .jmatext {
-            width: 50px;
+            width:70%;
         }
-        #anime-list {
+        /*#anime-list {
             border-collapse: collapse;
-            width: 100px;
             table-layout: fixed;
-        }
+            width: 100%;
+        }*/
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./index.js"></script>
 </head>
 <body>
-    <div class="wrapper"><canvas id="canvas"></canvas></div>
-        <div id="content">
+    <div id="content">
         <b><a href="/" id="root">noyuno.mydns.jp</a> / jma</b> 
             <input type="text" id="search" placeholder="フィルタ" onkeyup="search();
 "></input>
             <br>
         <hr>
-        <div class="section" id="anime"></div>
+        <div class="section" id="anime" class="table-parent"></div>
         <div class="section" id="search-not-found" style="display: none">∅</div>
         <div class="footer" role="contentinfo">
             気象庁防災情報XMLをPubSubHubbubで取得しWebSocketで配信しています．

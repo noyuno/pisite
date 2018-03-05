@@ -22,9 +22,7 @@ var print = function (data) {
                 a.getMinutes().padLeft()].join(':');
             $('<tr/>')
                 .append($("<td />").addClass('jmadatetime').append($("<a />")
-                    .attr("target", "_blank")
-                    .attr("href", d[i]['link']).text(dformat)))
-                //.append($("<td />").text(d[i]["infokind"]))
+                    .attr("href", "/jma/item.html?id=" + d[i]['id']).text(dformat)))
                 .append($("<td />").addClass('jmatitle').text(d[i]["title"]))
                 .append($("<td />").addClass('jmatext').text(d[i]["text"]))
                 .appendTo("#anime-list");

@@ -89,6 +89,7 @@ def createdata(s):
         tree = etree.parse(s)
 
         d = {
+            "id": s.replace("/var/www/html/jma/data/", "").replace(".xml", ""), 
             "link": s.replace("/var/www/html", domain),
             "infokind": str(tree.find("./jmx_ib:Head/jmx_ib:InfoKind", namespaces).text), 
             "title": str(tree.find("./jmx_ib:Head/jmx_ib:Title", namespaces).text), 

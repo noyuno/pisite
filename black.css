@@ -4,7 +4,8 @@
     font-family:"Inconsolata", "Noto Sans CJK JP DemiLight", "Noto Sans CJK JP Regular", monospace;
     font-size:20px;
     color: lightgray;
-    line-height: 1.2em
+    line-height: 1.3em;
+    box-sizing:border-box:
 }
 
 body, input {
@@ -74,5 +75,34 @@ hr:after {
 
 .hidden {
     display: none;
+}
+
+.table-parent {
+  display : table; 
+  table-layout : fixed;
+  width : 100%;
+    margin: 0.5em;
+}
+
+table {
+    display: table-cell;
+    table-layout:fixed;
+    border-collapse: collapse;
+    word-break : break-all;
+    word-wrap:break-all;
+    overflow-wrap:break-all;
+}
+td, th {
+    border: 1px white solid;
+    padding: 1px;
+}
+
+td {
+    padding-right: 0.5em 
+}
+
+ul, ol {
+    margin-top:0px;
+    margin-bottom:0px;
 }
 

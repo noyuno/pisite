@@ -9,47 +9,108 @@ var keyword = [];
 var data;
 var notifyarray = [];
 
-var print = function (n) {
-    $.ajax({
-        dataType: 'xml', 
-        url:"/jma/data/"+n, 
-        success: function (xml) {
+var setattr = function () {
+    document.title=args["id"] + " - jma";
+    $("#id").text(args["id"]);
+    var l = "/jma/data/"+args["id"]+".xml";
+    var a = $("<a />").attr("href", l).text("noyuno.mydns.jp"+l);
+    $(a).appendTo("#link");
+};
 
+var appendtext = function (xml, name, text, sep) {
+    $(xml).find(name).each(function () {
+        if (text=="") {
+            text = this.textContent;
+        } else {
+            if (sep==undefined) {
+                text+=this.textContent;
+            }else {
+                text += sep+this.textContent;
+            }
+        }
+    });
+    return text;
+};
+
+var area = function (xml, id, attrd) {
+    var table = $('<table />');
+    $("<tr style='font-weight: bold; text-align: center' />")
+        .append($("<td/>").addClass("table-area").text("Area"))
+        .append($("<td/>").addClass("table-kind").text("Kind"))
+        .append($("<td/>").addClass("table-change").text("ChangeStatus"))
+        .append($('<td />').addClass("table-full").text("FullStatus"))
+        .appendTo(table);
+
+    $(xml).children().each(function () {
+        var areas="";
+        var kinds="";
+        var change="";
+        var full="";
+        $(this).children().each(function () {
+            if (this.nodeName=="Kind") {
+                kinds = appendtext(this, "Name", kinds, ", ");
+                var sa="";
+                sa = appendtext(this, "Status", sa);
+                sa = appendtext(this, "Addition", sa, ", ");
+                if (sa!="") {
+                    kinds+="("+sa+")";
+                }
+            } else if (this.nodeName=="Areas" || this.nodeName=="Area") {
+                areas = appendtext(this, "Name", areas, ", ");
+            } else if (this.nodeName=="ChangeStatus") {
+                change=this.textContent;
+            } else if (this.nodeName=="FullStatus") {
+                full=this.textContent;
+            }
+        });
+        $("<tr />")
+            .append($("<td />").text(areas))
+            .append($("<td />").text(kinds))
+            .append($("<td />").text(change))
+            .append($("<td />").text(full))
+            .appendTo(table);
+    });
+    //$("#"+id).text(xml.nodeName + " " + attrd);
+    //$(table).appendTo("#"+id);
+    var div=$("<div />").addClass("table-parent").append(table);
+    var li=$("<li />").text(xml.nodeName + attrd);
+    $(li).append(div);
+    $(li).appendTo("#"+id);
+};
+
+var cid = 0;
+var read = function (xml, id) {
+    $(xml).children().each(function () {
+        var attr = this.attributes["type"] || "";
+        var attrd ="";
+        if (attr != "") {
+            attr = attr.value;
+            attrd= "(" + attr+")";
+        }
+        if (this.nodeName=="Information" || this.nodeName=="Warning") {
+            area(this, cid, attrd);
+        } else if ($(this).children().length!=0) {
+            cid++;
+            var liul=$("<li />").text(this.nodeName + attrd)
+                .append($("<ul />").attr("id", cid));
+            $(liul).appendTo("#"+id);
+            read(this, cid);
+        } else {
+            var li=$("<li />").text(this.nodeName + attrd +": "+ this.textContent);
+            $(li).appendTo("#"+id);
         }
     });
 };
 
-function search() {
-    var input = $("#search");
-    var filter = input.val().toLowerCase();
-    var table = $("#itemroot-list");
-    var tr = $("#itemroot-list tr");
-    var c = 0;
-
-    for (var i = 1; i < tr.length; i++) {
-        var matched = false;
-        for (var col = 1; col < 4; col++) {
-            var td = tr[i].getElementsByTagName("td")[col];
-            if (td) {
-                if (td.textContent.toLowerCase().indexOf(filter) > -1) {
-                    matched = true;
-                    break;
-                }
-            } 
+var print = function (n) {
+    $.ajax({
+        dataType: 'xml', 
+        url:"/jma/data/"+n+".xml", 
+        success: function (xml) {
+            read($(xml).find("Report"), "itemroot");
         }
-        if (matched) {
-            tr[i].style.display = "";
-            c++;
-        } else {
-            tr[i].style.display = "none";
-        }
-    }
-    if (c == 0) {
-        $("#search-not-found").css("display", "");
-    } else {
-        $("#search-not-found").css("display", "none");
-    }
-}
+    });
+};
 
 var notify;
 var args;
@@ -65,15 +126,8 @@ var getparams = function () {
 
 window.onload = function () {
     getparams();
-
-    var table = $('<table id="itemroot-list" />');
-    $("<tr style='font-weight: bold; text-align: center' />")
-        .append($('<td />').addClass('jmatitle').text("題"))
-        .append($('<td />').addClass('jmatext').text("内容")).appendTo(table);
-    $(table).appendTo("#itemroot");
-
-    print(args["n"]);
-
+    setattr();
+    print(args["id"]);
     $("#search").focus();
 };
 

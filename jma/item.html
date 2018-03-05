@@ -1,24 +1,20 @@
 <!doctype html>
 <head>
-    <title>/jma</title>
+    <title></title>
     <meta charset = "UTF-8">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inconsolata" />
     <link rel = "stylesheet" type = "text/css" href = "../black.css">
     <style>
-        * {
-            font-size:17px;
+        body {
+            line-height: 10;
         }
-        table {
-            white-space: nowrap;
-            table-layout: auto 
+        * {
+            font-size:16px;
         }
 
-        td {
-            padding-right: 0.5em 
-        }
-        hr:after {
-            top: -10px;
+        hr {
+            margin-bottom: 1em;
         }
         .section {
             margin: 1em 0em 1em 0em;
@@ -27,37 +23,30 @@
         .hidden {
             display: none;
         }
-
-        .jmadatetime {
-            width: 100px;
+        .table-area {
+            width:10%;
         }
-        .jmatitle {
-            width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
+        .table-kind {
+            width:60%;
         }
-        .jmatext {
-            width: 50px;
+        .table-change {
+            width:20%;
         }
-        #anime-list {
-            border-collapse: collapse;
-            width: 100px;
-            table-layout: fixed;
+        .table-full {
+            width:10%;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./item.js"></script>
 </head>
 <body>
-    <div class="wrapper"><canvas id="canvas"></canvas></div>
-        <div id="content">
-        <b><a href="/" id="root">noyuno.mydns.jp</a> / jma</b> 
-            <input type="text" id="search" placeholder="フィルタ" onkeyup="search();
-"></input>
+    <div id="content">
+        <b><a href="/">noyuno.mydns.jp</a> / <a href="/jma">jma</a></b> 
             <br>
         <hr>
+        <div>ID: <span id="id"></span></div>
+        <div>Link: <span id="link"><span></div>
         <div class="section" id="itemroot"></div>
-        <div class="section" id="search-not-found" style="display: none">∅</div>
         <div class="footer" role="contentinfo">
             気象庁防災情報XMLをPubSubHubbubで取得しWebSocketで配信しています．
             <a href="https://noyuno.github.io/blog/2017/10/08/jma">詳細</a>
