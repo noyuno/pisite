@@ -31,7 +31,7 @@ watcher_restart = 60
 
 class Cache():
     def __init__(self):
-        self.cachelength = 100
+        self.cachelength = 500
         self.list = []
 
     def load(self):
