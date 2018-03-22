@@ -1,36 +1,47 @@
 "use strict"
 const domain = "//noyuno.mydns.jp";
 const cgi = "/cgi/chromecast";
+const diskcgi = "/cgi/disk";
 Number.prototype.padLeft = function(base, chr){
      var  len = (String(base || 10).length - String(this).length)+1;
      return len > 0? new Array(len).join(chr || '0')+this : this;
 }
 
 var disk = function () {
+    var unit = 1024*1024*1024;
     google.charts.load('current', {packages: ['corechart']});
     google.charts.setOnLoadCallback(drawDisk);
 
     function drawDisk () {
         var data = new google.visualization.DataTable();
-        data.addColumn("string", "Usage");
-        data.addColumn("number", "Slices");
+        data.addColumn("string", "Path");
+        data.addColumn("number", "Used");
+        data.addColumn("number", "Free");
         var r = new XMLHttpRequest();
         r.onload = function () {
             var d = JSON.parse(r.responseText);
-            data.addRows([
-                ["Used", Number(d.used)], 
-                ["Free", Number(d.free)]
-            ]);
+            for (var p in d) {
+                data.addRow([
+                    String(p),
+                    Number(d[p].used / unit), 
+                    Number(d[p].free / unit)
+                ]);
+            }
             var option={
-                "legend":"none"
+                "isStacked":true, 
+                "legend":"none", 
+                "colors":["orange", "green"], 
+                //"hAxis": {
+                //    "scaleType":"log"
+                //}
             };
-            var chart = new google.visualization.PieChart(document.getElementById('diskchart'));
+            var chart = new google.visualization.BarChart(document.getElementById('diskchart'));
             chart.draw(data, option);
         };
         r.onerror = function () {
             console.log("unable to get disk usage");
         };
-        r.open('GET', domain + "/disk.php", true);
+        r.open('GET', domain + diskcgi, true);
         r.send(null);
     }
 };

@@ -1,13 +1,19 @@
 <?php
 $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 $base = 1024;
-$path = '/';
+$path = array('/', '/mnt/karen');
 
-$total_bytes = disk_total_space($path);
+$total_bytes = 0;
+foreach ($path as $p) {
+    $total_bytes  += disk_total_space($path);
+}
 $class = min((int)log($total_bytes , $base) , count($si_prefix) - 1);
 echo "{ \"total\":\"" . sprintf('%1.2f' , $total_bytes / pow($base,$class)) . "\", ";
 
-$free_bytes = disk_free_space($path);
+$free_bytes = 0;
+foreach ($path as $p) {
+    $free_bytes += disk_free_space($path);
+}
 $class = min((int)log($free_bytes , $base) , count($si_prefix) - 1);
 echo "\"free\":\"" . sprintf('%1.2f' , $free_bytes / pow($base,$class)) . "\", ";
 

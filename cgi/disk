@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import shutil
+import json
+
+unit = 1024 * 1024 * 1024
+path = ["/", "/mnt/karen"]
+
+def stat(path):
+    u = shutil.disk_usage(path)
+
+if __name__ == '__main__':
+    d={}
+    total=0
+    used=0
+    free=0
+    for p in path:
+        u=shutil.disk_usage(p)
+        d[p]={
+            "total":u.total, 
+            "used":u.used, 
+            "free":u.free
+        }
+        total+=u.total
+        used+=u.used
+        free+=u.free
+j = json.dumps(d, indent=4,
+    sort_keys=True, ensure_ascii=False, separators=(",", ": "))
+print("Content-Type: application/json")
+print()
+print(j)
+
