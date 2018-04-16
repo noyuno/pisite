@@ -337,11 +337,14 @@ footer {
                     <div class="mdl-card__supporting-text">
                         <a href="//record.noyuno.mydns.jp">Recording</a><br>
                         <a href="//kanban.noyuno.mydns.jp">Kanban</a><br>
-                        CA (
+                        CA:
                         <a href="//noyuno.mydns.jp/ca/ca.der">der</a>, 
-                        <a href="//noyuno.mydns.jp/ca/ca.pem">pem</a>
-                        )
+                        <a href="//noyuno.mydns.jp/ca/ca.crt">crt(pem)</a>
                         <br>
+                        <pre style="white-space:pre-wrap; word-wrap: break-word; font-size:small">
+mv ca.crt /etc/ca-certificates/trust-source/anchors
+trust extract-compat
+                        </pre>
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
                     </div>
