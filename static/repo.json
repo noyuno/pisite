@@ -60,19 +60,6 @@
             ]
         },
         {
-            "name": "noyuno.github.io",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/noyuno.github.io.git"
-            },
-            {
-                "name": "pi",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/noyuno.github.io.git"
-            }
-            ]
-        },
-        {
             "name": "paint",
             "remotes": [
             {
