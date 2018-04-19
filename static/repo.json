@@ -28,7 +28,7 @@
             },
             {
                 "name": "pi",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/dotfiles.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/dotfiles.git"
             }
             ]
         },
@@ -37,7 +37,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/eng.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/eng.git"
             }
             ]
         },
@@ -46,7 +46,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/labo.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/labo.git"
             }
             ]
         },
@@ -55,7 +55,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/leg.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/leg.git"
             }
             ]
         },
@@ -64,7 +64,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/paint.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/paint.git"
             }
             ]
         },
@@ -73,20 +73,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/pass.git"
-            }
-            ]
-        },
-        {
-            "name": "pisite",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/pisite.git"
-            },
-            {
-                "name": "pi",
-                "url": "http://git.noyuno.mydns.jp/git/noyuno/pisite.git"
+                "url": "https://git.noyuno.mydns.jp/git/noyuno/pass.git"
             }
             ]
         },
@@ -114,15 +101,6 @@
             {
                 "name": "origin",
                 "url": "git@github.com:noyuno/lib.git"
-            }
-            ]
-        },
-        {
-            "name": "YukariAkiyamaHubotSlack",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/YukariAkiyamaHubotSlack.git"
             }
             ]
         },
