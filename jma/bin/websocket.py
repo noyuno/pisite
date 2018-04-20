@@ -18,7 +18,7 @@ logging.basicConfig(
     datefmt='%Y%m%d-%H%M%S')
 
 port = 8000
-domain = "http://noyuno.mydns.jp"
+domain = "http://noyuno.space"
 datadir = "/var/www/html/jma/data"
 extension = "xml"
 clients = []

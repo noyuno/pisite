@@ -1,6 +1,6 @@
 {
 
-const domain = "//noyuno.mydns.jp";
+const domain = "//noyuno.space";
 const searchcgi = domain + "/door/door.cgi";
 const updatecgi = domain + "/door/door.cgi";
 

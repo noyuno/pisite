@@ -28,7 +28,7 @@
             },
             {
                 "name": "pi",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/dotfiles.git"
+                "url": "https://git.noyuno.space/git/noyuno/dotfiles.git"
             }
             ]
         },
@@ -37,7 +37,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/eng.git"
+                "url": "https://git.noyuno.space/git/noyuno/eng.git"
             }
             ]
         },
@@ -46,7 +46,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/labo.git"
+                "url": "https://git.noyuno.space/git/noyuno/labo.git"
             }
             ]
         },
@@ -55,7 +55,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/leg.git"
+                "url": "https://git.noyuno.space/git/noyuno/leg.git"
             }
             ]
         },
@@ -64,7 +64,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/paint.git"
+                "url": "https://git.noyuno.space/git/noyuno/paint.git"
             }
             ]
         },
@@ -73,7 +73,7 @@
             "remotes": [
             {
                 "name": "origin",
-                "url": "ssh://git@git.noyuno.mydns.jp:4023/noyuno/pass.git"
+                "url": "https://git.noyuno.space/git/noyuno/pass.git"
             }
             ]
         },

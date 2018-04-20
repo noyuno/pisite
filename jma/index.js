@@ -80,7 +80,7 @@ window.onload = function () {
         .append($('<td />').addClass('jmatext').text("内容")).appendTo(table);
     $(table).appendTo("#anime");
 
-    var ws = new WebSocket('ws://noyuno.mydns.jp:8000');
+    var ws = new WebSocket('ws://noyuno.space:8000');
     ws.onopen = function () { ws.send('cache'); };
     ws.onerror = function (e) { console.log(e); };
     ws.onmessage = function (e) {

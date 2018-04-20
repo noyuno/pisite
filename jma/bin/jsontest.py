@@ -9,7 +9,7 @@ namespaces = {'jmx': 'http://xml.kishou.go.jp/jmaxml1/',
 
 s = "/var/www/html/jma/data/e0102cfa-6a48-3e40-9f11-51753b5ecaba.xml"
 e = "test"
-domain = "http://noyuno.mydns.jp"
+domain = "http://noyuno.space"
 
 tree = etree.parse(s)
 d = {

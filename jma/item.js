@@ -13,7 +13,7 @@ var setattr = function () {
     document.title=args["id"] + " - jma";
     $("#id").text(args["id"]);
     var l = "/jma/data/"+args["id"]+".xml";
-    var a = $("<a />").attr("href", l).text("noyuno.mydns.jp"+l);
+    var a = $("<a />").attr("href", l).text("noyuno.space"+l);
     $(a).appendTo("#link");
 };
 

@@ -1,5 +1,5 @@
 "use strict"
-const domain = "//noyuno.mydns.jp";
+const domain = "//noyuno.space";
 const cgi = "/cgi/chromecast";
 const diskcgi = "/cgi/disk";
 Number.prototype.padLeft = function(base, chr){
