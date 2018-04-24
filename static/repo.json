@@ -150,6 +150,32 @@
                 "url": "git@github.com:noyuno/trashbot.git"
             }
             ]
+        },
+        {
+            "name": "pleroma",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@git.pleroma.social:noyuno/pleroma.git"
+            },
+            {
+                "name": "upstream",
+                "url": "git@git.pleroma.social:pleroma/pleroma.git"
+            }
+            ]
+        },
+        {
+            "name": "mastofe",
+            "remotes": [
+            {
+                "name": "origin",
+                "url": "git@git.pleroma.social:noyuno/mastofe.git"
+            },
+            {
+                "name": "upstream",
+                "url": "git@git.pleroma.social:pleroma/mastofe.git"
+            }
+            ]
         }
     ]
 }
