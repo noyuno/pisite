@@ -33,11 +33,11 @@
             ]
         },
         {
-            "name": "eng",
+            "name": "engm",
             "remotes": [
             {
                 "name": "origin",
-                "url": "https://git.noyuno.space/git/noyuno/eng.git"
+                "url": "https://git.noyuno.space/git/noyuno/engm.git"
             }
             ]
         },
