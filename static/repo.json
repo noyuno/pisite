@@ -78,24 +78,6 @@
             ]
         },
         {
-            "name": "unite-latexsymbols",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/unite-latexsymbols.git"
-            }
-            ]
-        },
-        {
-            "name": "unite-uri",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/unite-uri.git"
-            }
-            ]
-        },
-        {
             "name": "lib",
             "remotes": [
             {
@@ -121,59 +103,6 @@
             {
                 "name": "origin",
                 "url": "git@github.com:noyuno/gostruct.git"
-            }
-            ]
-        },
-        {
-            "name": "chrome-copy-title",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/chrome-copy-title.git"
-            }
-            ]
-        }, 
-        {
-            "name": "fonts",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/fonts.git"
-            }
-            ]
-        }, 
-        {
-            "name": "trashbot",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@github.com:noyuno/trashbot.git"
-            }
-            ]
-        },
-        {
-            "name": "pleroma",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@git.pleroma.social:noyuno/pleroma.git"
-            },
-            {
-                "name": "upstream",
-                "url": "git@git.pleroma.social:pleroma/pleroma.git"
-            }
-            ]
-        },
-        {
-            "name": "mastofe",
-            "remotes": [
-            {
-                "name": "origin",
-                "url": "git@git.pleroma.social:noyuno/mastofe.git"
-            },
-            {
-                "name": "upstream",
-                "url": "git@git.pleroma.social:pleroma/mastofe.git"
             }
             ]
         }
